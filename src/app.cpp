@@ -8,36 +8,25 @@
 
 /**
  * TODO:
- * move this someplace better
- * see: https://stackoverflow.com/a/402010
+ * - move this someplace better
+ * - cleanup code
+ * 
+ * see for explanation:
+ * https://yal.cc/rectangle-circle-intersection-test/
  */
 bool circleRectCollision(Vec2f circlePos, float circleRadius, Vec2f rectPos, Vec2f rectSize)
 {
-    // circleDistance.x = abs(circle.x - rect.x);
-    // circleDistance.y = abs(circle.y - rect.y);
-    Vec2f circleDist;
-    circleDist.x = abs(circlePos.x - rectPos.x);
-    circleDist.y = abs(circlePos.y - rectPos.y);
+    float CircleX = circlePos.x;
+    float CircleY = circlePos.y;
+    float CircleRadius = circleRadius;
+    float RectX = rectPos.x;
+    float RectY = rectPos.y;
+    float RectWidth = rectSize.width;
+    float RectHeight = rectSize.height;
 
-    // if (circleDistance.x > (rect.width/2 + circle.r)) { return false; }
-    // if (circleDistance.y > (rect.height/2 + circle.r)) { return false; }
-    if (circleDist.x > (rectSize.width/2 + circleRadius)) { return false; }
-    if (circleDist.y > (rectSize.height/2 + circleRadius)) { return false; }
-
-    // if (circleDistance.x <= (rect.width/2)) { return true; } 
-    // if (circleDistance.y <= (rect.height/2)) { return true; }
-    if (circleDist.x <= (rectSize.width/2)) { return true; } 
-    if (circleDist.y <= (rectSize.height/2)) { return true; }
-
-    // cornerDistance_sq = (circleDistance.x - rect.width/2)^2 +
-    //                      (circleDistance.y - rect.height/2)^2;
-    auto xC = (circleDist.x - rectSize.width/2);
-    auto yC = (circleDist.y - rectSize.height/2);
-
-    auto cornerDistance_sq = (xC*xC) + (yC*yC);
-
-    // return (cornerDistance_sq <= (circle.r^2));
-    return (cornerDistance_sq <= (circleRadius * circleRadius));
+    float deltaX = CircleX - Math::max(RectX, Math::min(CircleX, RectX + RectWidth));
+    float DeltaY = CircleY - Math::max(RectY, Math::min(CircleY, RectY + RectHeight));
+    return (deltaX * deltaX + DeltaY * DeltaY) < (CircleRadius * CircleRadius);   
 }
 
 
@@ -175,9 +164,6 @@ void game_update()
                         auto birdPos = Vec2f(birdX, gameState.birdY);
                         auto birdRadius = birdSize;
 
-                        // ~rectPos=(x -. xOffset, 0.),
-                        // ~rectW=pipeWidth,
-                        // ~rectH=y -. halfGap,
                         auto xPos = pipe.x - gameState.xOffset;
 
                         auto topPipePos = Vec2f(xPos, 0);
@@ -186,21 +172,18 @@ void game_update()
                         auto btmPipePos = Vec2f(xPos, pipe.y + halfGap);
                         auto btmPipeSize = Vec2f(pipeWidth, floorY);
 
-                        // bool topPipeCollides = circleRectCollision(birdPos, birdRadius, topPipePos, topPipeSize);
-                        // if (topPipeCollides)
-                        // {
-                        //     // printlog(1, "TOP PIPE COLLIDES");
-                        //     hitPipe = true;
-                        //     break;
-                        // }
+                        bool topPipeCollides = circleRectCollision(birdPos, birdRadius, topPipePos, topPipeSize);
+                        if (topPipeCollides)
+                        {
+                            printlog(1, "TOP PIPE COLLIDES");
+                            hitPipe = true;
+                            break;
+                        }
 
                         bool btmPipeCollides = circleRectCollision(birdPos, birdRadius, btmPipePos, btmPipeSize);
                         if (btmPipeCollides)
                         {
-                        printlog(1, "bird pos <x: %f, y: %f>", birdPos.x, birdPos.y);
-                        printlog(1, "btm pos <x: %f, y: %f>", btmPipePos.x, btmPipePos.y);
-
-                            // printlog(1, "BTM PIPE COLLIDES");
+                            printlog(1, "BTM PIPE COLLIDES");
                             hitPipe = true;
                             break;
                         }

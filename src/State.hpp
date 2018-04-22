@@ -12,50 +12,9 @@
 using namespace std;
 
 
-/*
-    SEE: https://github.com/bsansouci/reprocessing-example/tree/livestream-flappybird 
-
-    // constants
-    let jumpForce = (-500.);
-    let speed = 175.;
-    let pipeWidth = 50.;
-    let halfGap = 70.;
-    let birdSize = 20.;
-    let gravity = 1400.;
-    let birdX = 50.;
-    let defaultBirdY = 50.;
-    let pipeHeight = 350.;
-    let floorY = 500.;
-
-    type runningT =
-    | Running
-    | Dead
-    | Restart;
-
-    type stateT = {
-    birdY: float,
-    birdVY: float,
-    pipes: list((float, float)),
-    xOffset: float,
-    running: runningT,
-    image: imageT,
-    font: fontT,
-    score: int
-    };
-
-
-  {
-    birdY: defaultBirdY,
-    birdVY: 0.,
-    pipes: [(200., 100.), (400., 100.), (600., 100.), (800., 100.)],
-    xOffset: 0.,
-    running: Running,
-    image: Draw.loadImage(~filename="assets/flappy.png", ~isPixel=true, env),
-    font: Draw.loadFont(~filename="assets/flappy.fnt", ~isPixel=true, env),
-    score: 0
-  }
+/**
+ * SEE: https://github.com/bsansouci/reprocessing-example/tree/livestream-flappybird 
  */
-
 
 // constants
 const float jumpForce = -500.;
@@ -85,9 +44,9 @@ public:
     float birdVY = 0.;
     vector<Vec2f> pipes = {
         Vec2f(200., 100.),
-        // Vec2f(400., 100.),
-        // Vec2f(600., 100.),
-        // Vec2f(800., 100.),
+        Vec2f(400., 100.),
+        Vec2f(600., 100.),
+        Vec2f(800., 100.),
     };
     float xOffset = 0;
     RunningT running = RunningT::Running;
