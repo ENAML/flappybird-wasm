@@ -111,9 +111,14 @@ void game_update()
                     auto& state = game.state;
                     auto& gameState = state.gameState;
 
-                    // update xOffset
+                    /**
+                     * update xOffset
+                     */
                     gameState.xOffset += speed * DELTA_TIME;
 
+                    /**
+                     * update bird
+                     */
                     // trigger jump
                     if (state.mousePressed)
                     {
@@ -131,7 +136,9 @@ void game_update()
                         floorY - birdSize
                     );
 
-                    // update pipes
+                    /**
+                     * update pipes
+                     */
                     for (auto& pipe : gameState.pipes)
                     {
                         // pipe needs new position
@@ -154,9 +161,7 @@ void game_update()
                     }
 
                     /**
-                     * TODO: handle collisions
-                     * - pipes
-                     * - floor
+                     * detect collisions
                      */
                     bool hitPipe = false;
                     for (auto& pipe : gameState.pipes)
@@ -192,8 +197,15 @@ void game_update()
                     bool hitFloor = gameState.birdY >= floorY - birdSize;                   
                     // if (hitFloor)
                     //     printlog(1, "hit floor :(");
+
+                    /**
+                     * handle collisions
+                     * - TODO !
+                     */
                     
-                    // update score
+                    /**
+                     * update score
+                     */
                     for (auto& pipe : gameState.pipes)
                     {
                         // ((x, _)) => birdX +. xOffset <= x && birdX +. xOffset +. speed *. deltaTime > x,
