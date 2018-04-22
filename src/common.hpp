@@ -15,6 +15,9 @@
 #define SCREEN_H            640 
 #define SCREEN_W            400
 
+#define FPS					60  // assumes 60fps
+#define DELTA_TIME			(1.0 / FPS)
+
 
 /**
  * External / 3rd Party Imports
@@ -73,7 +76,7 @@ inline void printlog(int msgType, const char *text, ...)
         case 1: fprintf(stdout, "[ DEBUG ]: "); break;
         case 2: fprintf(stdout, "[ ERROR ]: "); break;
         case 3: fprintf(stdout, "[ WARNING ]: "); break;
-        default: break;
+        default: assert(false); break;
     }
 
     vfprintf(stdout, text, args);

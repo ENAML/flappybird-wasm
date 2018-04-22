@@ -130,7 +130,8 @@ public:
     int screenHeight = SCREEN_H;
 
     // input
-    int mouseDown = 0;
+    bool mousePressed = false;
+    bool mouseDown = false;
     Vector2 mousePressedPos = rlVec2(0, 0);
     Vector2 mouseDragPos = rlVec2(0, 0);
     Vector2 mousePos = rlVec2(0, 0);

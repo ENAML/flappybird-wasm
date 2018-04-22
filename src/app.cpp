@@ -38,6 +38,7 @@ void game_update()
     //---------------------------------------------------------------------------
     game.state.tick += 1;
     game.state.frameTime = GetFrameTime();
+    // printlog(1, "%f", game.state.frameTime);
     game.state.fps = (int)(1.0f / game.state.frameTime);
     // printlog(0, "fps: %d | frameTime %f", game.state.fps, game.state.frameTime);
     
@@ -45,16 +46,16 @@ void game_update()
     // handle input 
     //---------------------------------------------------------------------------
     {
-        // update cursor data
+        game.state.mousePressed = IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE);
+        game.state.mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
+
         game.state.mousePos = GetMousePosition();
         
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        if (game.state.mousePressed)
         {
-            game.state.mousePressedPos = GetMousePosition();           
+            game.state.mousePressedPos = GetMousePosition();
             // printlog(0, "[%i] mouse pressed", game.state.tick);
         }
-
-        game.state.mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
 
         if (game.state.mouseDown)
         {
@@ -80,7 +81,42 @@ void game_update()
             game.state.tick % game.state.ticksPerUpdate == 0
         )
     ) {
-        
+        switch (game.state.gameState.running)        
+        {
+            case RunningT::Running:
+                {
+                    auto& state = game.state;
+                    auto& gameState = state.gameState;
+
+                    // update xOffset
+                    gameState.xOffset += speed * DELTA_TIME;
+
+                    // trigger jump
+                    if (state.mousePressed)
+                    {
+                        gameState.birdVY = jumpForce;
+                    }
+                    // add gravity to bird vel
+                    gameState.birdVY += gravity * DELTA_TIME;
+
+                    // update bird pos
+                    gameState.birdY += gameState.birdVY * DELTA_TIME;
+                    // clamp bird pos to floor/ceil
+                    gameState.birdY = Math::clamp(
+                        gameState.birdY,
+                        birdSize,
+                        floorY - birdSize
+                    );
+
+                }
+                break;
+            case RunningT::Dead:
+                // TODO
+                break;
+            case RunningT::Restart:
+                // TODO
+                break;
+        }
     }
 
 
@@ -94,9 +130,6 @@ void game_update()
     // if (game.state.tick % 200 == 1)
     // {
     //     println("[DEBUG : %5i] ", game.state.tick);
-    //     println("    entities: %zu", game.entityManager.mEntities.size());
-    //     println("     bullets: %zu", game.entityManager.mBullets.size());
-    //     println("   particles: %zu", game.particleManager.mParticles.size());
     // }
 
     //---------------------------------------------------------------------------
@@ -125,7 +158,6 @@ int main(int argc, char **argv)
 
     // loadConfig("resources/test.json");
 
-
     SetConfigFlags(
         // FLAG_SHOW_LOGO |
         FLAG_VSYNC_HINT |
@@ -153,7 +185,7 @@ int main(int argc, char **argv)
     #if defined(PLATFORM_WEB)
         emscripten_set_main_loop(game_update, 0, 1);
     #else
-        SetTargetFPS(60);
+        SetTargetFPS(FPS);
 
         while (!WindowShouldClose()) // Detect window close button or ESC key
         {
