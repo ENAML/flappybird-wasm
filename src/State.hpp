@@ -83,7 +83,12 @@ class GameState
 public:
     float birdY = defaultBirdY;
     float birdVY = 0.;
-    vector<Vec2f> pipes = { Vec2f(200., 100.), Vec2f(400., 100.), Vec2f(600., 100.), Vec2f(800., 100.) };
+    vector<Vec2f> pipes = {
+        Vec2f(200., 100.),
+        // Vec2f(400., 100.),
+        // Vec2f(600., 100.),
+        // Vec2f(800., 100.),
+    };
     float xOffset = 0;
     RunningT running = RunningT::Running;
     // image: imageT,

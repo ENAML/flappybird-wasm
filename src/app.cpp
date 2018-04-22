@@ -6,6 +6,40 @@
 #include "IO.hpp"
 #include "gui.h"
 
+/**
+ * TODO:
+ * move this someplace better
+ * see: https://stackoverflow.com/a/402010
+ */
+bool circleRectCollision(Vec2f circlePos, float circleRadius, Vec2f rectPos, Vec2f rectSize)
+{
+    // circleDistance.x = abs(circle.x - rect.x);
+    // circleDistance.y = abs(circle.y - rect.y);
+    Vec2f circleDist;
+    circleDist.x = abs(circlePos.x - rectPos.x);
+    circleDist.y = abs(circlePos.y - rectPos.y);
+
+    // if (circleDistance.x > (rect.width/2 + circle.r)) { return false; }
+    // if (circleDistance.y > (rect.height/2 + circle.r)) { return false; }
+    if (circleDist.x > (rectSize.width/2 + circleRadius)) { return false; }
+    if (circleDist.y > (rectSize.height/2 + circleRadius)) { return false; }
+
+    // if (circleDistance.x <= (rect.width/2)) { return true; } 
+    // if (circleDistance.y <= (rect.height/2)) { return true; }
+    if (circleDist.x <= (rectSize.width/2)) { return true; } 
+    if (circleDist.y <= (rectSize.height/2)) { return true; }
+
+    // cornerDistance_sq = (circleDistance.x - rect.width/2)^2 +
+    //                      (circleDistance.y - rect.height/2)^2;
+    auto xC = (circleDist.x - rectSize.width/2);
+    auto yC = (circleDist.y - rectSize.height/2);
+
+    auto cornerDistance_sq = (xC*xC) + (yC*yC);
+
+    // return (cornerDistance_sq <= (circle.r^2));
+    return (cornerDistance_sq <= (circleRadius * circleRadius));
+}
+
 
 /**
  * wrapper object for game
@@ -107,6 +141,89 @@ void game_update()
                         birdSize,
                         floorY - birdSize
                     );
+
+                    // update pipes
+                    for (auto& pipe : gameState.pipes)
+                    {
+                        // pipe needs new position
+                        if (pipe.x - gameState.xOffset + pipeWidth <= 0.0)
+                        {
+                            // get pipe with highest x pos
+                            auto maxPipe = Vec2f();
+                            for (auto& pipe : gameState.pipes)
+                                if (pipe.x > maxPipe.x)
+                                    maxPipe = pipe;
+                            
+                            // set pipe pos based on max x pos
+                            pipe.x = maxPipe.x + rng::range(200, 300);
+                            pipe.y = rng::range(
+                                50 + halfGap,
+                                floorY - 50 - halfGap
+                            );
+                            // printlog(1, "update pipe! <x: %f, y: %f>", pipe.x, pipe.y);
+                        }
+                    }
+
+                    /**
+                     * TODO: handle collisions
+                     * - pipes
+                     * - floor
+                     */
+                    bool hitPipe = false;
+                    for (auto& pipe : gameState.pipes)
+                    {
+                        auto birdPos = Vec2f(birdX, gameState.birdY);
+                        auto birdRadius = birdSize;
+
+                        // ~rectPos=(x -. xOffset, 0.),
+                        // ~rectW=pipeWidth,
+                        // ~rectH=y -. halfGap,
+                        auto xPos = pipe.x - gameState.xOffset;
+
+                        auto topPipePos = Vec2f(xPos, 0);
+                        auto topPipeSize = Vec2f(pipeWidth, pipe.y - halfGap);
+
+                        auto btmPipePos = Vec2f(xPos, pipe.y + halfGap);
+                        auto btmPipeSize = Vec2f(pipeWidth, floorY);
+
+                        // bool topPipeCollides = circleRectCollision(birdPos, birdRadius, topPipePos, topPipeSize);
+                        // if (topPipeCollides)
+                        // {
+                        //     // printlog(1, "TOP PIPE COLLIDES");
+                        //     hitPipe = true;
+                        //     break;
+                        // }
+
+                        bool btmPipeCollides = circleRectCollision(birdPos, birdRadius, btmPipePos, btmPipeSize);
+                        if (btmPipeCollides)
+                        {
+                        printlog(1, "bird pos <x: %f, y: %f>", birdPos.x, birdPos.y);
+                        printlog(1, "btm pos <x: %f, y: %f>", btmPipePos.x, btmPipePos.y);
+
+                            // printlog(1, "BTM PIPE COLLIDES");
+                            hitPipe = true;
+                            break;
+                        }
+                    }
+
+                    bool hitFloor = gameState.birdY >= floorY - birdSize;                   
+                    // if (hitFloor)
+                    //     printlog(1, "hit floor :(");
+                    
+                    // update score
+                    for (auto& pipe : gameState.pipes)
+                    {
+                        // ((x, _)) => birdX +. xOffset <= x && birdX +. xOffset +. speed *. deltaTime > x,
+                        bool scored = (
+                            birdX + gameState.xOffset <= pipe.x &&
+                            birdX + gameState.xOffset + speed * DELTA_TIME > pipe.x
+                        );
+                        if (scored)
+                        {
+                            gameState.score += 1;
+                            printlog(0, "score!: %d", gameState.score);
+                        }
+                    }
 
                 }
                 break;

@@ -18,23 +18,17 @@ public:
     Rectf(const Vector2f& np, float nw, float nh) : position(np), size(nw, nh) { }
     Rectf(const Vector2f& np, const Vector2f& nd) : position(np), size(nd) { }
 
-    bool contains(const Vector2f& newPt) const
-    {
-        return  newPt.x >= position.x &&
-                newPt.y >= position.y &&
-                newPt.x < (position.x + size.width) &&
-                newPt.y < (position.y + size.height);
-    }
+    float left() const
+    { return this->position.x; }
+    float right() const
+    { return this->position.x + this->size.x; }
+    float top() const
+    { return this->position.y; }
+    float bottom() const
+    { return this->position.y + this->size.y; }
 
-    /**
-     * stuff I added:
-     */
-    float left() { return this->position.x; }
-    float right() { return this->position.x + this->size.x; }
-    float top() { return this->position.y; }
-    float bottom() { return this->position.y + this->size.y; }
-
-    Vector2f center() { return this->position + this->size/2; }
+    Vector2f center() const
+    { return this->position + this->size/2; }
 
 
     void log(const char *name)
@@ -48,9 +42,16 @@ public:
         );           
     }
 
+    bool contains(const Vector2f& newPt) const
+    {
+        return  newPt.x >= position.x &&
+                newPt.y >= position.y &&
+                newPt.x < (position.x + size.width) &&
+                newPt.y < (position.y + size.height);
+    }
     
     // taken from: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-    static bool collides(Rectf a, Rectf b)
+    static bool collides(const Rectf& a, const Rectf& b)
     {
         return (
             a.position.x < b.position.x + b.size.width &&
@@ -60,7 +61,7 @@ public:
         );
     }
 
-    static Rectf intersection(Rectf a, Rectf b)
+    static Rectf intersection(const Rectf& a, const Rectf& b)
     {
         float ax0 = a.left();
         float ax1 = a.right();
@@ -86,5 +87,4 @@ public:
             y1 - y0
         );
     }
-    
 };

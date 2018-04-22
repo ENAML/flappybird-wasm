@@ -150,6 +150,15 @@ class Renderer
                 c 
             );
         };
+        auto draw_circle = [&](Vec2f position, float radius, Color c)
+        {
+            DrawCircle(
+                position.x * zoomScale,
+                position.y * zoomScale,
+                radius * zoomScale,
+                c
+            );
+        };
 
 
         // draw pipes
@@ -199,11 +208,16 @@ class Renderer
             );
         }
 
-        // draw player rectangle
-        draw_rect_centered(
+        // draw bird 
+        // draw_rect_centered(
+        //     Vec2f(birdX, state->gameState.birdY),
+        //     Vec2f(birdSize * 2) + Vec2f(4),
+        //     BIRD_COLOR 
+        // );
+        draw_circle(
             Vec2f(birdX, state->gameState.birdY),
-            Vec2f(birdSize * 2) + Vec2f(4),
-            BIRD_COLOR 
+            birdSize,
+            BIRD_COLOR
         );
 
         

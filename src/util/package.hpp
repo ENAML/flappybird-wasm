@@ -25,11 +25,8 @@
 
 
 //Patterns
-#include "containers.hpp"
 #include "events.hpp"
 #include "Optional.hpp"
-// #include "Variant.hpp"
-#include "Singleton.hpp"
 
 //Math
 #include "Math.hpp"
