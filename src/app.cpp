@@ -16,17 +16,17 @@
  */
 bool circleRectCollision(Vec2f circlePos, float circleRadius, Vec2f rectPos, Vec2f rectSize)
 {
-    float CircleX = circlePos.x;
-    float CircleY = circlePos.y;
-    float CircleRadius = circleRadius;
-    float RectX = rectPos.x;
-    float RectY = rectPos.y;
-    float RectWidth = rectSize.width;
-    float RectHeight = rectSize.height;
+    float cx = circlePos.x;
+    float cy = circlePos.y;
+    float cr = circleRadius;
+    float rx = rectPos.x;
+    float ry = rectPos.y;
+    float rw = rectSize.width;
+    float rh = rectSize.height;
 
-    float deltaX = CircleX - Math::max(RectX, Math::min(CircleX, RectX + RectWidth));
-    float DeltaY = CircleY - Math::max(RectY, Math::min(CircleY, RectY + RectHeight));
-    return (deltaX * deltaX + DeltaY * DeltaY) < (CircleRadius * CircleRadius);   
+    float deltaX = cx - Math::max(rx, Math::min(cx, rx + rw));
+    float DeltaY = cy - Math::max(ry, Math::min(cy, ry + rh));
+    return (deltaX * deltaX + DeltaY * DeltaY) < (cr * cr);   
 }
 
 
