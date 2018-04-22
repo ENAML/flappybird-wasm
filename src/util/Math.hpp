@@ -1,0 +1,72 @@
+#pragma once
+
+#include "util/Vector.hpp"
+
+
+// avoid conflicting definition from raylib
+#undef PI
+
+class Math
+{
+public:
+    // A mathematical constant for the ratio of the circumference of a
+    // circle to its diameter, expressed as pi, with a value of 3.141592653589793.
+    static const float PI;       
+
+public:
+    // Angle and trigonometric functions
+    static float radians(const float &degrees)
+    {
+        return degrees * (PI / 180.0f);
+    }
+
+    static float degrees(const float &radians)
+    {
+        return radians * (180.0f / PI);
+    }
+
+    // Exponential functions
+    static float roundPow2(const float &x)
+    {
+        if (x > 0)
+        {
+            return 1 << uint32_t(log2(float(x - 1)) + 1);
+        }
+        
+        return 1;
+    }
+
+    // Common functions
+    static float min(const float &x, const float &y)
+    {
+        return (x < y) ? x : y;
+    }
+    static float max(const float &x, const float &y)
+    {
+        return (x > y) ? x : y;
+    }
+    static float clamp(const float &x, const float &minVal, const float &maxVal)
+    {
+        return max(min(x, maxVal), minVal);
+    }
+    static float mix(float const & x, float const & y, float const & a)
+    {
+        return float(float(x) + a * float(y - x));
+    }
+
+    // static float random();
+
+    static float atan2(float y, float x)
+    {
+        return atan2f(y, x);
+    }
+    static float atan2(Vec2f v)
+    {
+        return atan2f(v.y, v.x);
+    }
+
+    static float lerp(float const &src, float const &dest, float const &pct)
+    {
+        return src + (dest - src)*pct;
+    }
+};
