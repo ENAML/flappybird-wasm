@@ -20,7 +20,7 @@ using namespace std;
 const float jumpForce = -500.;
 const float speed = 175.;
 const float pipeWidth = 50.;
-const float halfGap = 70.;
+const float halfGap = 100.; // 70.;
 const float birdSize = 20.;
 const float gravity = 1400.;
 const float birdX = 50.;

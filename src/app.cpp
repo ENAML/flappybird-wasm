@@ -104,12 +104,28 @@ void game_update()
             game.state.tick % game.state.ticksPerUpdate == 0
         )
     ) {
+        auto& state = game.state;
+        auto& gameState = state.gameState;
+
+        auto update_bird = [&]()
+        {
+            // add gravity to bird vel
+            gameState.birdVY += gravity * DELTA_TIME;
+
+            // update bird pos
+            gameState.birdY += gameState.birdVY * DELTA_TIME;
+            // clamp bird pos to floor/ceil
+            gameState.birdY = Math::clamp(
+                gameState.birdY,
+                birdSize,
+                floorY - birdSize
+            );
+        };
+
         switch (game.state.gameState.running)        
         {
             case RunningT::Running:
                 {
-                    auto& state = game.state;
-                    auto& gameState = state.gameState;
 
                     /**
                      * update xOffset
@@ -121,20 +137,9 @@ void game_update()
                      */
                     // trigger jump
                     if (state.mousePressed)
-                    {
                         gameState.birdVY = jumpForce;
-                    }
-                    // add gravity to bird vel
-                    gameState.birdVY += gravity * DELTA_TIME;
-
-                    // update bird pos
-                    gameState.birdY += gameState.birdVY * DELTA_TIME;
-                    // clamp bird pos to floor/ceil
-                    gameState.birdY = Math::clamp(
-                        gameState.birdY,
-                        birdSize,
-                        floorY - birdSize
-                    );
+                    // update bird pos/vel
+                    update_bird();
 
                     /**
                      * update pipes
@@ -180,7 +185,7 @@ void game_update()
                         bool topPipeCollides = circleRectCollision(birdPos, birdRadius, topPipePos, topPipeSize);
                         if (topPipeCollides)
                         {
-                            printlog(1, "TOP PIPE COLLIDES");
+                            // printlog(1, "TOP PIPE COLLIDES");
                             hitPipe = true;
                             break;
                         }
@@ -188,7 +193,7 @@ void game_update()
                         bool btmPipeCollides = circleRectCollision(birdPos, birdRadius, btmPipePos, btmPipeSize);
                         if (btmPipeCollides)
                         {
-                            printlog(1, "BTM PIPE COLLIDES");
+                            // printlog(1, "BTM PIPE COLLIDES");
                             hitPipe = true;
                             break;
                         }
@@ -202,6 +207,13 @@ void game_update()
                      * handle collisions
                      * - TODO !
                      */
+                    if (hitPipe || hitFloor)
+                    {
+                        gameState.running = RunningT::Dead;
+
+                        if (hitPipe)
+                            gameState.birdVY = jumpForce;
+                    }
                     
                     /**
                      * update score
@@ -223,10 +235,21 @@ void game_update()
                 }
                 break;
             case RunningT::Dead:
-                // TODO
+                {
+                    update_bird();
+
+                    // if bird is at floor, move to restart
+                    if (gameState.birdY >= floorY - birdSize)
+                        gameState.running = RunningT::Restart;
+                }
                 break;
             case RunningT::Restart:
-                // TODO
+                {
+                    if (state.mousePressed)
+                    {
+                        state.gameState = GameState();
+                    }
+                }
                 break;
         }
     }
