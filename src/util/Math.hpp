@@ -24,6 +24,16 @@ public:
     {
         return radians * (180.0f / PI);
     }
+    
+    static float atan2(float y, float x)
+    {
+        return atan2f(y, x);
+    }
+
+    static float atan2(Vec2f v)
+    {
+        return atan2f(v.y, v.x);
+    }
 
     // Exponential functions
     static float roundPow2(const float &x)
@@ -49,22 +59,10 @@ public:
     {
         return max(min(x, maxVal), minVal);
     }
-    static float mix(float const & x, float const & y, float const & a)
-    {
-        return float(float(x) + a * float(y - x));
-    }
-
-    // static float random();
-
-    static float atan2(float y, float x)
-    {
-        return atan2f(y, x);
-    }
-    static float atan2(Vec2f v)
-    {
-        return atan2f(v.y, v.x);
-    }
-
+    // static float mix(float const & x, float const & y, float const & a)
+    // {
+    //     return float(float(x) + a * float(y - x));
+    // }
     static float lerp(float const &src, float const &dest, float const &pct)
     {
         return src + (dest - src)*pct;
