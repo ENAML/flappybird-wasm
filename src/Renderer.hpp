@@ -5,9 +5,56 @@
  */
 #pragma once
 
+#include "rlgl.h"
+
 #include "common.hpp"
 #include "State.hpp"
 #include "gui.h"
+
+// Draw a part of a texture (defined by a rectangle) with 'pro' parameters
+// NOTE: origin is relative to destination rectangle size
+// see: raylib's "DrawTexturePro()"
+void my_drawTexture(Texture2D texture, Rectangle sourceRec, Rectangle destRec, Vector2 origin, float rotation, Color tint)
+{
+    // Check if texture is valid
+    if (texture.id > 0)
+    {
+        if (sourceRec.width < 0) sourceRec.x -= sourceRec.width;
+        if (sourceRec.height < 0) sourceRec.y -= sourceRec.height;
+
+        rlEnableTexture(texture.id);
+
+        rlPushMatrix();
+            rlTranslatef((float)destRec.x, (float)destRec.y, 0);
+            rlRotatef(rotation, 0, 0, 1);
+            rlTranslatef(-origin.x, -origin.y, 0);
+
+            rlBegin(RL_QUADS);
+                rlColor4ub(tint.r, tint.g, tint.b, tint.a);
+                rlNormal3f(0.0f, 0.0f, 1.0f);                          // Normal vector pointing towards viewer
+
+                // Bottom-left corner for texture and quad
+                rlTexCoord2f((float)sourceRec.x/texture.width, (float)sourceRec.y/texture.height);
+                rlVertex2f(0.0f, 0.0f);
+
+                // Bottom-right corner for texture and quad
+                rlTexCoord2f((float)sourceRec.x/texture.width, (float)(sourceRec.y + sourceRec.height)/texture.height);
+                rlVertex2f(0.0f, (float)destRec.height);
+
+                // Top-right corner for texture and quad
+                rlTexCoord2f((float)(sourceRec.x + sourceRec.width)/texture.width, (float)(sourceRec.y + sourceRec.height)/texture.height);
+                rlVertex2f((float)destRec.width, (float)destRec.height);
+
+                // Top-left corner for texture and quad
+                rlTexCoord2f((float)(sourceRec.x + sourceRec.width)/texture.width, (float)sourceRec.y/texture.height);
+                rlVertex2f((float)destRec.width, 0.0f);
+            rlEnd();
+        rlPopMatrix();
+
+        rlDisableTexture();
+    }
+}
+
 
 struct Textures
 {
@@ -78,7 +125,7 @@ class Renderer
     {
         // load textures
 
-        // this->mTextures.ship1 = LoadTexture("resources/customsprites/ship1.png");
+        this->mTextures.ship1 = LoadTexture("resources/flappy_assets/sprites/bluebird-downflap.png");
         // this->mTextures.ship2 = LoadTexture("resources/customsprites/ship2.png");
         // this->mTextures.ship3 = LoadTexture("resources/customsprites/ship3.png");
         // this->mTextures.ship4 = LoadTexture("resources/customsprites/ship4.png");
@@ -164,28 +211,6 @@ class Renderer
         // draw pipes
         for (auto& pipe : state->gameState.pipes)
         {
-            //    let height = - int_of_float(pipeHeight);
-            //   Draw.subImage(
-            //     image,
-            //     ~pos=(int_of_float(x -. xOffset), int_of_float(y -. halfGap)),
-            //     ~width=int_of_float(pipeWidth),
-            //     ~height,
-            //     ~texPos=(0, 323),
-            //     ~texWidth=26,
-            //     ~texHeight=160,
-            //     env
-            //   );
-            //   Draw.subImage(
-            //     image,
-            //     ~pos=(int_of_float(x -. xOffset), int_of_float(y +. halfGap)),
-            //     ~width=int_of_float(pipeWidth),
-            //     ~height=int_of_float(pipeHeight),
-            //     ~texPos=(0, 323),
-            //     ~texWidth=26,
-            //     ~texHeight=160,
-            //     env
-            //   )           
-
             auto& gameState = state->gameState;
 
             auto xPos = pipe.x - gameState.xOffset;
@@ -209,15 +234,30 @@ class Renderer
         }
 
         // draw bird 
-        // draw_rect_centered(
-        //     Vec2f(birdX, state->gameState.birdY),
-        //     Vec2f(birdSize * 2) + Vec2f(4),
-        //     BIRD_COLOR 
-        // );
         draw_circle(
             Vec2f(birdX, state->gameState.birdY),
             birdSize,
             BIRD_COLOR
+        );
+        
+
+        /**
+         * TEST TEX RENDER
+         */ 
+        static float rot = 0;
+
+        Texture2D tex = this->mTextures.ship1;
+        Rectangle srcRect = {0, 0, tex.width, tex.height};
+
+        Vec2f position = Vec2f(100, 100) * zoomScale;
+        Vec2f size = Vec2f(tex.width, tex.height) * zoomScale;
+        my_drawTexture(
+            tex,
+            srcRect,
+            rlRect(position, size),
+            rlVec2(size / 2),
+            rot++,
+            WHITE
         );
 
         
