@@ -48,6 +48,17 @@
  * -----------------------------------------------------------------------------
  */
 
+
+
+/**
+ * for errors...
+ */
+inline void die(const char *message)
+{
+    perror(message);
+    exit(1); 
+}
+
 /**
  * `println()` for easier logging...
  */

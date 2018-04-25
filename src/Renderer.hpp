@@ -67,6 +67,7 @@ void my_drawTexture(
 struct Textures
 {
     Texture2D bird;
+    Texture2D atlas;
 };
 
 
@@ -123,6 +124,7 @@ class Renderer
         // load textures
 
         this->mTextures.bird = LoadTexture("resources/flappy_assets/sprites/bluebird-downflap.png");
+        this->mTextures.atlas = LoadTexture("util/tinypng/bin/atlas.png");
     }
 
     void render(State *state)
@@ -235,21 +237,29 @@ class Renderer
          */ 
         static float rot = 0;
 
-        Texture2D tex = this->mTextures.bird;
-        Rectf srcRect(0, 0, tex.width, tex.height);
+        // test with single sprite img
+        {
+            Texture2D tex = this->mTextures.bird;
+            Rectf srcRect(0, 0, tex.width, tex.height);
 
-        Vec2f position = Vec2f(100, 100) * zoomScale;
-        Vec2f size = Vec2f(tex.width, tex.height) * zoomScale;
-        Rectf destRect(position, size);
-        
-        Vec2f offset(size / 2);
-        my_drawTexture(
-            tex,
-            srcRect,
-            destRect,
-            offset,
-            rot++
-        );
+            Vec2f position = Vec2f(100, 100) * zoomScale;
+            Vec2f size = Vec2f(tex.width, tex.height) * zoomScale;
+            Rectf destRect(position, size);
+            
+            Vec2f offset(size / 2);
+            my_drawTexture(
+                tex,
+                srcRect,
+                destRect,
+                offset,
+                rot++
+            );
+        }
+
+        // test with atlas
+
+
+
 
         
 

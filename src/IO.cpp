@@ -4,30 +4,19 @@
 #include <cJSON/cJSON.h>
 
 #include "common.hpp"
-
 #include "IO.hpp"
 
 
 /**
- * Private prototypes
- * ------------------
+ * TODO
  */
-
-
-
-/**
- * Functions
- * ---------
- */
-
-// TODO: this actually isn't used right now
-void loadConfig(const char *path)
+void IO::loadConfig(const char *path)
 {
-    loadJSON(path);
+    // loadJSON(path);
 }
 
 
-char *loadFileBuffer(const char *path)
+char *IO::loadFileBuffer(const char *path)
 {
     char *buffer = 0;
     long length;
@@ -53,19 +42,13 @@ char *loadFileBuffer(const char *path)
 }
 
 
-void freeFileBuffer(char *buffer)
-{
-    free(buffer);
-}
-
-
-void loadJSON(const char *path)
+void IO::loadJSON(const char *path)
 {
     println("loading '%s'... \n", path);
     
-    char *buffer = loadFileBuffer(path);
+    IO::FileBuffer buf(path);
 
-    cJSON *json = cJSON_Parse(buffer);
+    cJSON *json = cJSON_Parse(buf.getData());
 
     char *string = cJSON_Print(json);
 
@@ -74,9 +57,6 @@ void loadJSON(const char *path)
     
     free(string);
 
-
     cJSON_Delete(json);
-    freeFileBuffer(buffer);
-
 }
 

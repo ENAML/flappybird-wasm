@@ -27,14 +27,14 @@ int main(int argc, char **argv)
 	// testfs();
 
 	const char *png_names[] = {
-		"imgs/1x1.png",
-		"imgs/4x4.png",
-		"imgs/debug_tile.png",
-		"imgs/default.png",
-		"imgs/house_blue.png",
-		"imgs/house_red.png",
-		"imgs/house_yellow.png",
-		"imgs/squinkle.png",
+		// "imgs/1x1.png",
+		// "imgs/4x4.png",
+		// "imgs/debug_tile.png",
+		// "imgs/default.png",
+		// "imgs/house_blue.png",
+		// "imgs/house_red.png",
+		// "imgs/house_yellow.png",
+		// "imgs/squinkle.png",
 
 		"imgs/sprites/redbird-downflap.png",
 		"imgs/sprites/pipe-red.png",
