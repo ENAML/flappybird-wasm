@@ -125,7 +125,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	EMSC_FLAGS += -s ASSERTIONS=1 
 	EMSC_FLAGS += --profiling 
 	EMSC_FLAGS += -s TOTAL_MEMORY=16777216 
-	EMSC_FLAGS += --preload-file resources
+	EMSC_FLAGS += --preload-file resources/build
 	# EMSC_FLAGS += -s ELIMINATE_DUPLICATE_FUNCTIONS=1 # slow to run!
 	EMSC_FLAGS += --shell-file platform/web/shell.html
 

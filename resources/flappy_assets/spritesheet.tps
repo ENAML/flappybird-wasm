@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.4.0</string>
+        <string>4.6.3</string>
         <key>fileName</key>
         <string>/Users/enaml/Projects/tests/raylib_tests/my_scenes/6_flappy/resources/flappy_assets/spritesheet.tps</string>
         <key>autoSDSettings</key>
@@ -16,6 +16,125 @@
                 <string></string>
                 <key>spriteFilter</key>
                 <string></string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>@2x</string>
+                <key>spriteFilter</key>
+                <string>@2x</string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>@3x</string>
+                <key>spriteFilter</key>
+                <string>@3x</string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>~iphone</string>
+                <key>spriteFilter</key>
+                <string>~iphone</string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>~ipad</string>
+                <key>spriteFilter</key>
+                <string>~ipad</string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>@2x~iphone</string>
+                <key>spriteFilter</key>
+                <string>@2x~iphone</string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>@2x~ipad</string>
+                <key>spriteFilter</key>
+                <string>@2x~ipad</string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>-1</int>
+                    <key>height</key>
+                    <int>-1</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>1</double>
+                <key>extension</key>
+                <string>@3x~iphone</string>
+                <key>spriteFilter</key>
+                <string>@3x~iphone</string>
                 <key>acceptFractionalValues</key>
                 <false/>
                 <key>maxTextureSize</key>
@@ -38,7 +157,7 @@
         <key>textureFileName</key>
         <filename></filename>
         <key>flipPVR</key>
-        <false/>
+        <true/>
         <key>pvrCompressionQuality</key>
         <enum type="SettingsBase::PvrCompressionQuality">PVR_QUALITY_NORMAL</enum>
         <key>atfCompressData</key>
@@ -129,28 +248,12 @@
                 <uint>1</uint>
             </struct>
         </struct>
-        <key>andEngine</key>
-        <struct type="AndEngine">
-            <key>minFilter</key>
-            <enum type="AndEngine::MinFilter">Linear</enum>
-            <key>packageName</key>
-            <string>Texture</string>
-            <key>wrap</key>
-            <struct type="AndEngineWrap">
-                <key>s</key>
-                <enum type="AndEngineWrap::Wrap">Clamp</enum>
-                <key>t</key>
-                <enum type="AndEngineWrap::Wrap">Clamp</enum>
-            </struct>
-            <key>magFilter</key>
-            <enum type="AndEngine::MagFilter">MagLinear</enum>
-        </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>textures.json</filename>
+                <filename>../production/textures{v}.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -169,9 +272,9 @@
         <key>autoAliasEnabled</key>
         <true/>
         <key>trimSpriteNames</key>
-        <false/>
+        <true/>
         <key>prependSmartFolderName</key>
-        <false/>
+        <true/>
         <key>autodetectAnimations</key>
         <true/>
         <key>globalSpriteSettings</key>
@@ -199,40 +302,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">sprites/0.png</key>
-            <key type="filename">sprites/2.png</key>
-            <key type="filename">sprites/3.png</key>
-            <key type="filename">sprites/4.png</key>
-            <key type="filename">sprites/5.png</key>
-            <key type="filename">sprites/6.png</key>
-            <key type="filename">sprites/7.png</key>
-            <key type="filename">sprites/8.png</key>
-            <key type="filename">sprites/9.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,9,12,18</rect>
-                <key>scale9Paddings</key>
-                <rect>6,9,12,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">sprites/1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,9,8,18</rect>
-                <key>scale9Paddings</key>
-                <rect>4,9,8,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">sprites/background-day.png</key>
             <key type="filename">sprites/background-night.png</key>
             <struct type="IndividualSpriteSettings">
@@ -301,9 +370,43 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>46,67,92,134</rect>
+                <rect>46,67,92,133</rect>
                 <key>scale9Paddings</key>
-                <rect>46,67,92,134</rect>
+                <rect>46,67,92,133</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/num-0.png</key>
+            <key type="filename">sprites/num-2.png</key>
+            <key type="filename">sprites/num-3.png</key>
+            <key type="filename">sprites/num-4.png</key>
+            <key type="filename">sprites/num-5.png</key>
+            <key type="filename">sprites/num-6.png</key>
+            <key type="filename">sprites/num-7.png</key>
+            <key type="filename">sprites/num-8.png</key>
+            <key type="filename">sprites/num-9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,12,18</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,12,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/num-1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,9,8,18</rect>
+                <key>scale9Paddings</key>
+                <rect>4,9,8,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -324,16 +427,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>sprites/0.png</filename>
-            <filename>sprites/1.png</filename>
-            <filename>sprites/2.png</filename>
-            <filename>sprites/3.png</filename>
-            <filename>sprites/4.png</filename>
-            <filename>sprites/5.png</filename>
-            <filename>sprites/6.png</filename>
-            <filename>sprites/7.png</filename>
-            <filename>sprites/8.png</filename>
-            <filename>sprites/9.png</filename>
             <filename>sprites/background-day.png</filename>
             <filename>sprites/background-night.png</filename>
             <filename>sprites/base.png</filename>
@@ -342,6 +435,16 @@
             <filename>sprites/bluebird-upflap.png</filename>
             <filename>sprites/gameover.png</filename>
             <filename>sprites/message.png</filename>
+            <filename>sprites/num-0.png</filename>
+            <filename>sprites/num-1.png</filename>
+            <filename>sprites/num-2.png</filename>
+            <filename>sprites/num-3.png</filename>
+            <filename>sprites/num-4.png</filename>
+            <filename>sprites/num-5.png</filename>
+            <filename>sprites/num-6.png</filename>
+            <filename>sprites/num-7.png</filename>
+            <filename>sprites/num-8.png</filename>
+            <filename>sprites/num-9.png</filename>
             <filename>sprites/pipe-green.png</filename>
             <filename>sprites/pipe-red.png</filename>
             <filename>sprites/redbird-downflap.png</filename>
@@ -372,6 +475,17 @@
         <key>normalMapSheetFileName</key>
         <filename></filename>
         <key>exporterProperties</key>
-        <map type="ExporterProperties"/>
+        <map type="ExporterProperties">
+            <key>plain::bool-property</key>
+            <struct type="ExporterProperty">
+                <key>value</key>
+                <string>false</string>
+            </struct>
+            <key>plain::string-property</key>
+            <struct type="ExporterProperty">
+                <key>value</key>
+                <string>hello world</string>
+            </struct>
+        </map>
     </struct>
 </data>
