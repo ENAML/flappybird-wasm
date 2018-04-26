@@ -64,10 +64,19 @@ void my_drawTexture(
 }
 
 
+class Texture
+{
+    string key;
+    Texture2D tex;
+    Rectf srcFrame;
+};
+
 struct Textures
 {
     Texture2D bird;
     Texture2D atlas;
+
+
 };
 
 
@@ -123,7 +132,8 @@ class Renderer
     {
         // load textures
 
-        this->mTextures.bird = LoadTexture("resources/flappy_assets/sprites/bluebird-downflap.png");
+        this->mTextures.bird = LoadTexture("resources/flappy_assets/sprites/bluebird-downflap.png"); // 34 x 24
+
         this->mTextures.atlas = LoadTexture("util/tinypng/bin/atlas.png");
     }
 
@@ -243,7 +253,7 @@ class Renderer
             Rectf srcRect(0, 0, tex.width, tex.height);
 
             Vec2f position = Vec2f(100, 100) * zoomScale;
-            Vec2f size = Vec2f(tex.width, tex.height) * zoomScale;
+            Vec2f size = Vec2f(tex.width, tex.height) * zoomScale * 2;
             Rectf destRect(position, size);
             
             Vec2f offset(size / 2);
@@ -252,12 +262,37 @@ class Renderer
                 srcRect,
                 destRect,
                 offset,
-                rot++
+                rot
             );
         }
 
         // test with atlas
+        {
+            Texture2D tex = this->mTextures.atlas;
 
+            // atlas coords
+            auto x = 0.5175857544 * tex.width;
+            auto y = 0.1972732544 * tex.height;
+            auto w = (0.5507736206 * tex.width) - x;
+            auto h = (0.2206954956 * tex.height) - y;
+
+            Rectf srcRect(x, y, w, h);
+
+            Vec2f position = Vec2f(200, 100) * zoomScale;
+            Vec2f size = Vec2f(w, h) * zoomScale * 2;
+            Rectf destRect(position, size);
+            
+            Vec2f offset(size / 2);
+            my_drawTexture(
+                tex,
+                srcRect,
+                destRect,
+                offset,
+                rot
+            );
+        }
+
+        rot++;
 
 
 

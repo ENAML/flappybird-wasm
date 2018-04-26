@@ -1,10 +1,16 @@
 #include <stdlib.h>
-#include <stdio.h>
+#include <vector>
+#include <string>
+#include <iostream>
+#include <fstream>
 
-#include <cJSON/cJSON.h>
+// #include <cJSON/cJSON.h>
+#include "json.hpp"
 
 #include "common.hpp"
 #include "IO.hpp"
+
+
 
 
 /**
@@ -44,19 +50,42 @@ char *IO::loadFileBuffer(const char *path)
 
 void IO::loadJSON(const char *path)
 {
+    using namespace std;
+    using nlohmann::json;
+
     println("loading '%s'... \n", path);
     
-    IO::FileBuffer buf(path);
 
-    cJSON *json = cJSON_Parse(buf.getData());
+    // open file
+    ifstream i(path);
 
-    char *string = cJSON_Print(json);
+    // put data into json
+    json j;
+    i >> j;
 
-    // println("%s\n", string);
-    println("successfully loaded '%s' \n", path);
-    
-    free(string);
+    auto frames = j["frames"];
 
-    cJSON_Delete(json);
+    for (auto frame = frames.begin(); frame != frames.end(); ++frame) {
+        auto f = frame.value()["frame"];
+        int x = f["x"];
+        int y = f["y"];
+        int w = f["w"];
+        int h = f["h"];
+        std::cout << frame.key() << " : " << frame.value() << "\n";
+        std::cout << "x: " << x << " y: " << y << " w: " << w << " h: " <<  h  << "\n" << endl;
+    }
+
+    // for (auto &n : nums)
+    // {
+    //     cout
+    //     << n
+    //     << endl;
+    // }
+
+    // // write prettified json
+    // cout
+    // // << setw(4) << j
+    // << j
+    // << endl;
 }
 
