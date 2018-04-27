@@ -97,6 +97,8 @@ LDFLAGS := -g -Wall
 # EMSCRIPTEN / HTML5 Stuff:
 ifeq ($(PLATFORM),PLATFORM_WEB)
 
+	BIN = index
+
 	RAYLIB_RELEASE = $(RAYLIB_PATH)/release/libs/html5
 
 	CC = emcc
@@ -118,7 +120,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
     EMSC_FLAGS := 
-	# EMSC_FLAGS += -O3 # optimize
+	EMSC_FLAGS += -O3 # optimize
 	EMSC_FLAGS += --memory-init-file 0
 	EMSC_FLAGS += -D_DEFAULT_SOURCE
 	EMSC_FLAGS += -s USE_GLFW=3 
