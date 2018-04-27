@@ -3,7 +3,6 @@
 
 #include "State.hpp"
 #include "Renderer.hpp"
-#include "IO.hpp"
 #include "gui.h"
 
 /**
@@ -290,8 +289,6 @@ int main(int argc, char **argv)
  	//------------------------------------------------------------------------------ 
 	// Initialization
 	//------------------------------------------------------------------------------ 
-
-    // loadConfig("resources/test.json");
 
     SetConfigFlags(
         // FLAG_SHOW_LOGO |

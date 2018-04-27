@@ -9,6 +9,7 @@
 
 #include "common.hpp"
 #include "State.hpp"
+#include "Resource.hpp"
 #include "gui.h"
 
 /*
@@ -64,26 +65,20 @@ void my_drawTexture(
 }
 
 
-class Texture
-{
-    string key;
-    Texture2D tex;
-    Rectf srcFrame;
-};
-
+// TODO: remove
 struct Textures
 {
     Texture2D bird;
-    Texture2D atlas;
-
-
 };
 
 
 class Renderer
 {
-    public:
+public:
+    TextureMap texMap;
+
     Textures mTextures;
+
     Color mBGColor;
 
     Camera2D mCamera;
@@ -132,9 +127,10 @@ class Renderer
     {
         // load textures
 
+        // TODO: REMOVE
         this->mTextures.bird = LoadTexture("resources/flappy_assets/sprites/bluebird-downflap.png"); // 34 x 24
 
-        this->mTextures.atlas = LoadTexture("util/tinypng/bin/atlas.png");
+        this->texMap = Resource::loadTextures();
     }
 
     void render(State *state)
@@ -268,24 +264,19 @@ class Renderer
 
         // test with atlas
         {
-            Texture2D tex = this->mTextures.atlas;
 
-            // atlas coords
-            auto x = 0.5175857544 * tex.width;
-            auto y = 0.1972732544 * tex.height;
-            auto w = (0.5507736206 * tex.width) - x;
-            auto h = (0.2206954956 * tex.height) - y;
+            static const std::string bird_key = "bluebird-downflap";
 
-            Rectf srcRect(x, y, w, h);
+            auto& texData = this->texMap.find(bird_key)->second;
 
             Vec2f position = Vec2f(200, 100) * zoomScale;
-            Vec2f size = Vec2f(w, h) * zoomScale * 2;
+            Vec2f size = texData.srcFrame.size * zoomScale * 2;
             Rectf destRect(position, size);
             
             Vec2f offset(size / 2);
             my_drawTexture(
-                tex,
-                srcRect,
+                texData.tex,
+                texData.srcFrame,
                 destRect,
                 offset,
                 rot
