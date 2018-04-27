@@ -63,7 +63,9 @@ public:
     // {
     //     return float(float(x) + a * float(y - x));
     // }
-    static float lerp(float const &src, float const &dest, float const &pct)
+
+    // returns value btwn 'src' and 'dest'
+    static float lerp(const float& src, const float& dest, const float& pct)
     {
         return src + (dest - src)*pct;
     }
