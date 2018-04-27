@@ -125,7 +125,6 @@ void game_update()
         {
             case RunningT::Running:
                 {
-
                     /**
                      * update xOffset
                      */
@@ -204,7 +203,6 @@ void game_update()
 
                     /**
                      * handle collisions
-                     * - TODO !
                      */
                     if (hitPipe || hitFloor)
                     {

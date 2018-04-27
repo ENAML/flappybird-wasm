@@ -49,11 +49,11 @@ public:
         Vec2f(0), 
     };
 
-
     float xOffset = 0;
+
+    float birdRotation = 0; // handled / updated by renderer only
+
     RunningT running = RunningT::Running;
-    // image: imageT,
-    // font: fontT,
     int score = 0;
 
     GameState()

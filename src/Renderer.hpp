@@ -167,9 +167,9 @@ public:
         static const std::string TEX_BACKGROUND = "background-day";
         static const std::string TEX_PIPE = "pipe-green";
         static const std::string TEX_FLOOR = "base";
-        static const std::string TEX_BIRD_0 = "bluebird-downflap";
-        static const std::string TEX_BIRD_1 = "bluebird-midflap";
-        static const std::string TEX_BIRD_2 = "bluebird-upflap";
+        static const std::string TEX_BIRD_0 = "yellowbird-downflap";
+        static const std::string TEX_BIRD_1 = "yellowbird-midflap";
+        static const std::string TEX_BIRD_2 = "yellowbird-upflap";
 
         float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
         // float scale = 1.0;
@@ -358,18 +358,20 @@ public:
             
             Vec2f offset(size / 2);
 
-            float rotation = Math::map(
+            // update bird rotation
+            float newRotation = Math::map(
                 gameState.birdVY,
-                -500, 1100, //-200, 1200,
-                Math::degrees(-1), Math::degrees(1)
+                -500, 1100,
+                -70, 75 // -67, 67
             );
+            gameState.birdRotation = Math::lerp(0.3, gameState.birdRotation, newRotation);
 
             my_drawTexture(
                 texData.tex,
                 texData.srcFrame,
                 destRect,
                 offset,
-                rotation
+                gameState.birdRotation 
             );
 
             // // DEBUG: draw shape
