@@ -250,21 +250,21 @@ public:
             );
 
 
-            // DEBUG: draw outlines
-            auto pipeSize = Vec2f(
-                pipeWidth, // actual width (hard-coded in state)
-                size.height
-            ); 
-            draw_rect(
-                topPos,
-                pipeSize,
-                COLOR_DEBUG 
-            );
-            draw_rect(
-                btmPos,
-                pipeSize,
-                COLOR_DEBUG 
-            );
+            // // DEBUG: draw outlines
+            // auto pipeSize = Vec2f(
+            //     pipeWidth, // actual width (hard-coded in state)
+            //     size.height
+            // ); 
+            // draw_rect(
+            //     topPos,
+            //     pipeSize,
+            //     COLOR_DEBUG 
+            // );
+            // draw_rect(
+            //     btmPos,
+            //     pipeSize,
+            //     COLOR_DEBUG 
+            // );
         }
 
         /**
@@ -315,12 +315,12 @@ public:
                 rotation
             );
 
-            // DEBUG: draw shape
-            draw_circle(
-                Vec2f(birdX, state->gameState.birdY),
-                birdSize,
-                COLOR_DEBUG
-            );
+            // // DEBUG: draw shape
+            // draw_circle(
+            //     Vec2f(birdX, state->gameState.birdY),
+            //     birdSize,
+            //     COLOR_DEBUG
+            // );
         }
         
         
