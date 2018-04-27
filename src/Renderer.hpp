@@ -153,10 +153,11 @@ public:
 
         static const float DEBUG_OPACITY = 0.3;
 
-        static const Color BIRD_COLOR = (Color){255, 255, 255, 255};
-        static const Color PIPE_COLOR = (Color){255, 0, 113, 255};
+        // static const Color COLOR_BIRD = (Color){255, 255, 255, 255};
+        static const Color COLOR_DEBUG = (Color){255, 0, 113, 255};
 
-        static const std::string BIRD_TEX_0 = "bluebird-downflap";
+        static const std::string TEX_BIRD_0 = "bluebird-downflap";
+        static const std::string TEX_PIPE = "pipe-green";
 
         float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
         // float scale = 1.0;
@@ -164,7 +165,7 @@ public:
 
         auto draw_rect = [&](Vec2f position, Vec2f size, Color c)
         {
-            DrawRectangle(
+            DrawRectangleLines(
                 (position.x) * zoomScale,
                 (position.y) * zoomScale,
                 size.x * zoomScale,
@@ -174,7 +175,7 @@ public:
         };
         auto draw_rect_centered = [&](Vec2f position, Vec2f size, Color c)
         {
-            DrawRectangle(
+            DrawRectangleLines(
                 (position.x - size.x/2) * zoomScale,
                 (position.y - size.y/2) * zoomScale,
                 size.x * zoomScale,
@@ -184,7 +185,7 @@ public:
         };
         auto draw_circle = [&](Vec2f position, float radius, Color c)
         {
-            DrawCircle(
+            DrawCircleLines(
                 position.x * zoomScale,
                 position.y * zoomScale,
                 radius * zoomScale,
@@ -193,28 +194,48 @@ public:
         };
 
 
-        // draw pipes
+        /**
+         * Render pipes 
+         */
         for (auto& pipe : state->gameState.pipes)
         {
             auto& gameState = state->gameState;
 
             auto xPos = pipe.x - gameState.xOffset;
+
             auto pipeSize = Vec2f(pipeWidth, pipeHeight);
 
-            // draw top pipe
+            auto btmPos = Vec2f(xPos, pipe.y + halfGap);
             auto topPos = Vec2f(xPos, pipe.y - halfGap - pipeHeight);
+
+
+            // draw texture
+            auto& texData = this->texMap.find(TEX_PIPE)->second;
+
+            Vec2f position = btmPos * zoomScale;
+            Vec2f size = texData.srcFrame.size * zoomScale;
+            Rectf destRect(position, size);
+            
+            // Vec2f offset(size / 2);
+            my_drawTexture(
+                texData.tex,
+                texData.srcFrame,
+                destRect,
+                Vec2f(0), //offset,
+                0
+            );
+
+            // draw top pipe
             draw_rect(
                 topPos,
                 pipeSize,
-                PIPE_COLOR
+                COLOR_DEBUG 
             );
-
             // draw btm pipe
-            auto btmPos = Vec2f(xPos, pipe.y + halfGap);
             draw_rect(
                 btmPos,
                 pipeSize,
-                PIPE_COLOR
+                COLOR_DEBUG 
             );
         }
 
@@ -223,7 +244,7 @@ public:
          */
         {
             // draw texture
-            auto& texData = this->texMap.find(BIRD_TEX_0)->second;
+            auto& texData = this->texMap.find(TEX_BIRD_0)->second;
 
             Vec2f position = Vec2f(birdX, state->gameState.birdY) * zoomScale;
             Vec2f size = texData.srcFrame.size * zoomScale * 2;
@@ -242,64 +263,44 @@ public:
             draw_circle(
                 Vec2f(birdX, state->gameState.birdY),
                 birdSize,
-                BIRD_COLOR
+                COLOR_DEBUG
             );
         }
 
 
-        /**
-         * TEST TEX RENDER
-         * ---------------
-         */ 
-        static float rot = 0;
-
-        // // test with single sprite img
+        // /**
+        //  * TEST TEX RENDER
+        //  * ---------------
+        //  */ 
         // {
-        //     Texture2D tex = this->mTextures.bird;
-        //     Rectf srcRect(0, 0, tex.width, tex.height);
+        //     static float rot = 0;
 
-        //     Vec2f position = Vec2f(100, 100) * zoomScale;
-        //     Vec2f size = Vec2f(tex.width, tex.height) * zoomScale * 2;
+        //     auto& texData = this->texMap.find(TEX_BIRD_0)->second;
+
+        //     Vec2f position = Vec2f(200, 100) * zoomScale;
+        //     Vec2f size = texData.srcFrame.size * zoomScale * 2;
         //     Rectf destRect(position, size);
             
         //     Vec2f offset(size / 2);
         //     my_drawTexture(
-        //         tex,
-        //         srcRect,
+        //         texData.tex,
+        //         texData.srcFrame,
         //         destRect,
         //         offset,
         //         rot
         //     );
+
+        //     rot++;
         // }
 
-        // test with atlas
-        {
-
-            auto& texData = this->texMap.find(BIRD_TEX_0)->second;
-
-            Vec2f position = Vec2f(200, 100) * zoomScale;
-            Vec2f size = texData.srcFrame.size * zoomScale * 2;
-            Rectf destRect(position, size);
-            
-            Vec2f offset(size / 2);
-            my_drawTexture(
-                texData.tex,
-                texData.srcFrame,
-                destRect,
-                offset,
-                rot
-            );
-        }
-
-        rot++;
 
 
 
         
 
-
-
-        // end camera 2d render
+        /**
+         * end camera 2d render
+         */
         End2dMode();
     }
 
