@@ -20,7 +20,7 @@ using namespace std;
 const float jumpForce = -500.;
 const float speed = 175.;
 const float pipeWidth = 50.;
-const float halfGap = 90.; // 70.; 
+const float halfGap = 70.; 
 const float birdSize = 15.; // 20.; // bird radius
 const float gravity = 1400.;
 const float birdX = 50.;
@@ -43,11 +43,13 @@ public:
     float birdY = defaultBirdY;
     float birdVY = 0.;
     vector<Vec2f> pipes = {
-        Vec2f(200., 130.),
-        Vec2f(400., 130.),
-        Vec2f(600., 130.),
-        Vec2f(800., 130.),
+        Vec2f(0), 
+        Vec2f(0), 
+        Vec2f(0), 
+        Vec2f(0), 
     };
+
+
     float xOffset = 0;
     RunningT running = RunningT::Running;
     // image: imageT,
@@ -58,10 +60,17 @@ public:
     {
         printlog(0, "creating GameState");
 
-        // for (auto& pipe : this->pipes)
-        // {
-        //     printlog(0, "pipe<%f, %f>", pipe.x, pipe.y);
-        // }
+        int pipeX = 500;
+        int incr = 200;
+
+        for (auto& pipe : this->pipes)
+        {
+            pipe.x = pipeX;
+            pipe.y = 150;
+
+            pipeX += incr;
+            // printlog(0, "pipe<%f, %f>", pipe.x, pipe.y);
+        }
     }
 
 
