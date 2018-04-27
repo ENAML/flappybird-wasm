@@ -200,7 +200,7 @@ public:
         };
         auto draw_circle = [&](Vec2f position, float radius, Color c)
         {
-            DrawCircleLines(
+            DrawCircle(
                 position.x * zoomScale,
                 position.y * zoomScale,
                 radius * zoomScale,
@@ -217,7 +217,7 @@ public:
 
             Vec2f size = texData.srcFrame.size;
             Vec2f position = Vec2f(
-                fmod(-gameState.xOffset, size.width),
+                fmod(-gameState.xOffset / 2, size.width),
                 0
             );
 
@@ -240,7 +240,7 @@ public:
         /**
          * Render pipes 
          */
-        for (auto& pipe : state->gameState.pipes)
+        for (auto& pipe : gameState.pipes)
         {
 
             // get texture
@@ -324,7 +324,6 @@ public:
             }
         }
 
-
         /**
          * Render bird
          */
@@ -353,7 +352,7 @@ public:
             
             auto& texData = this->texMap.find(*texKey)->second;
 
-            Vec2f position = Vec2f(birdX, state->gameState.birdY) * zoomScale;
+            Vec2f position = Vec2f(birdX, gameState.birdY) * zoomScale;
             Vec2f size = texData.srcFrame.size * zoomScale;
             Rectf destRect(position, size);
             
@@ -375,12 +374,11 @@ public:
 
             // // DEBUG: draw shape
             // draw_circle(
-            //     Vec2f(birdX, state->gameState.birdY),
+            //     Vec2f(birdX, gameState.birdY),
             //     birdSize,
             //     COLOR_DEBUG
             // );
         }
-        
         
 
         /**

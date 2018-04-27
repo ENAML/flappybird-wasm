@@ -12,7 +12,7 @@
  */
 #define DEBUG				true
 #define DRAW_STATS          false
-#define SCREEN_H            640 
+#define SCREEN_H            600 //640 
 #define SCREEN_W            400
 
 #define FPS					60  // assumes 60fps
