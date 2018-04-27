@@ -43,19 +43,27 @@ void my_drawTexture(
                 rlNormal3f(0.0f, 0.0f, 1.0f);                          // Normal vector pointing towards viewer
 
                 // Bottom-left corner for texture and quad
-                rlTexCoord2f((float)sourceRec.position.x/texture.width, (float)sourceRec.position.y/texture.height);
+                float btm_left_x = (float)sourceRec.position.x/texture.width; 
+                float btm_left_y = (float)sourceRec.position.y/texture.height;
+                rlTexCoord2f(btm_left_x, btm_left_y);
                 rlVertex2f(0.0f, 0.0f);
 
                 // Bottom-right corner for texture and quad
-                rlTexCoord2f((float)sourceRec.position.x/texture.width, (float)(sourceRec.position.y + sourceRec.size.height)/texture.height);
+                float btm_right_x = (float)sourceRec.position.x/texture.width; 
+                float btm_right_y = (float)(sourceRec.position.y + sourceRec.size.height)/texture.height;
+                rlTexCoord2f(btm_right_x, btm_right_y);
                 rlVertex2f(0.0f, (float)destRec.size.height);
 
                 // Top-right corner for texture and quad
-                rlTexCoord2f((float)(sourceRec.position.x + sourceRec.size.width)/texture.width, (float)(sourceRec.position.y + sourceRec.size.height)/texture.height);
+                float top_right_x = (float)(sourceRec.position.x + sourceRec.size.width)/texture.width;
+                float top_right_y = (float)(sourceRec.position.y + sourceRec.size.height)/texture.height;
+                rlTexCoord2f(top_right_x, top_right_y);
                 rlVertex2f((float)destRec.size.width, (float)destRec.size.height);
 
                 // Top-left corner for texture and quad
-                rlTexCoord2f((float)(sourceRec.position.x + sourceRec.size.width)/texture.width, (float)sourceRec.position.y/texture.height);
+                float top_left_x = (float)(sourceRec.position.x + sourceRec.size.width)/texture.width;
+                float top_left_y = (float)sourceRec.position.y/texture.height;
+                rlTexCoord2f(top_left_x, top_left_y);
                 rlVertex2f((float)destRec.size.width, 0.0f);
             rlEnd();
         rlPopMatrix();
@@ -201,37 +209,53 @@ public:
         {
             auto& gameState = state->gameState;
 
+            // get texture
+            auto& texData = this->texMap.find(TEX_PIPE)->second;
+            Vec2f size = texData.srcFrame.size;
+
             auto xPos = pipe.x - gameState.xOffset;
 
-            auto pipeSize = Vec2f(pipeWidth, pipeHeight);
-
+            auto topPos = Vec2f(xPos, pipe.y - halfGap - size.height);
             auto btmPos = Vec2f(xPos, pipe.y + halfGap);
-            auto topPos = Vec2f(xPos, pipe.y - halfGap - pipeHeight);
+
+            // top render data
+            Rectf topDestRect(topPos * zoomScale, size * zoomScale);
+            auto topSrcFrame = texData.srcFrame;  // NOTE: reverse tex y for top
+            topSrcFrame.size.height *= -1; 
+
+            // btm render data
+            Rectf btmDestRect(btmPos * zoomScale, size * zoomScale);
 
 
-            // draw texture
-            auto& texData = this->texMap.find(TEX_PIPE)->second;
-
-            Vec2f position = btmPos * zoomScale;
-            Vec2f size = texData.srcFrame.size * zoomScale;
-            Rectf destRect(position, size);
+            // draw top pipe
+            my_drawTexture(
+                texData.tex,
+                topSrcFrame,
+                topDestRect,
+                Vec2f(0),
+                0
+            );
             
-            // Vec2f offset(size / 2);
+            // draw btm pipe
             my_drawTexture(
                 texData.tex,
                 texData.srcFrame,
-                destRect,
-                Vec2f(0), //offset,
+                btmDestRect,
+                Vec2f(0),
                 0
             );
 
-            // draw top pipe
+
+            // DEBUG: draw outlines
+            auto pipeSize = Vec2f(
+                pipeWidth, // actual width (hard-coded in state)
+                size.height
+            ); 
             draw_rect(
                 topPos,
                 pipeSize,
                 COLOR_DEBUG 
             );
-            // draw btm pipe
             draw_rect(
                 btmPos,
                 pipeSize,
@@ -247,10 +271,11 @@ public:
             auto& texData = this->texMap.find(TEX_BIRD_0)->second;
 
             Vec2f position = Vec2f(birdX, state->gameState.birdY) * zoomScale;
-            Vec2f size = texData.srcFrame.size * zoomScale * 2;
+            Vec2f size = texData.srcFrame.size * zoomScale;
             Rectf destRect(position, size);
             
             Vec2f offset(size / 2);
+
             my_drawTexture(
                 texData.tex,
                 texData.srcFrame,

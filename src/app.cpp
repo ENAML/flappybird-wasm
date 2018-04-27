@@ -206,13 +206,13 @@ void game_update()
                      * handle collisions
                      * - TODO !
                      */
-                    if (hitPipe || hitFloor)
-                    {
-                        gameState.running = RunningT::Dead;
+                    // if (hitPipe || hitFloor)
+                    // {
+                    //     gameState.running = RunningT::Dead;
 
-                        if (hitPipe)
-                            gameState.birdVY = jumpForce;
-                    }
+                    //     if (hitPipe)
+                    //         gameState.birdVY = jumpForce;
+                    // }
                     
                     /**
                      * update score
