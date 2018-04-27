@@ -165,6 +165,8 @@ public:
         static const Color COLOR_DEBUG = (Color){255, 0, 113, 255};
 
         static const std::string TEX_BIRD_0 = "bluebird-downflap";
+        static const std::string TEX_BIRD_1 = "bluebird-midflap";
+        static const std::string TEX_BIRD_2 = "bluebird-upflap";
         static const std::string TEX_PIPE = "pipe-green";
 
         float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
@@ -270,7 +272,29 @@ public:
          */
         {
             // draw texture
-            auto& texData = this->texMap.find(TEX_BIRD_0)->second;
+            int frame = (int)(gameState.xOffset / 20) % 4;
+            
+            const string* texKey;
+            switch (frame)
+            {
+                case 0:
+                    texKey = &TEX_BIRD_0;
+                    break;
+                case 1:
+                    texKey = &TEX_BIRD_1;
+                    break;
+                case 2:
+                    texKey = &TEX_BIRD_2;
+                    break;
+                case 3:
+                    texKey = &TEX_BIRD_1;
+                    break;
+                default:
+                    assert(false);
+                    break;
+            }
+            
+            auto& texData = this->texMap.find(*texKey)->second;
 
             Vec2f position = Vec2f(birdX, state->gameState.birdY) * zoomScale;
             Vec2f size = texData.srcFrame.size * zoomScale;
