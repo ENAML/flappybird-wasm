@@ -43,7 +43,7 @@ INCLUDES := -I. -I./src -I./extern -I./extern/variant/include
 # - -L.
 # - -L/usr/local/lib 
 # - -L$(RAYLIB_PATH)/release/libs/osx
-LDLIBS := -L. -L/usr/local/lib -lm -lraylib -lcjson
+LDLIBS := -L. -L/usr/local/lib -lm -lraylib
 
 # compiler warnings
 WARNINGS := -Wall #-Wextra #-pedantic 

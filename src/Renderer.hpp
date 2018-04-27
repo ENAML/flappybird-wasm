@@ -168,6 +168,7 @@ public:
         static const std::string TEX_BIRD_1 = "bluebird-midflap";
         static const std::string TEX_BIRD_2 = "bluebird-upflap";
         static const std::string TEX_PIPE = "pipe-green";
+        static const std::string TEX_FLOOR = "base";
 
         float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
         // float scale = 1.0;
@@ -266,6 +267,33 @@ public:
             //     COLOR_DEBUG 
             // );
         }
+
+        /**
+         * Render floor / ground
+         */
+        {
+            auto &texData = this->texMap.find(TEX_FLOOR)->second;
+
+            Vec2f size = texData.srcFrame.size;
+            Vec2f position = Vec2f(-gameState.xOffset, floorY);
+
+            const int MAX_W = state->screenWidth;
+
+            position.x = fmod(position.x, MAX_W);
+
+            while (position.x < (float)MAX_W)
+            {
+                my_drawTexture(
+                    texData.tex,
+                    texData.srcFrame,
+                    Rectf(position * zoomScale, size * zoomScale),
+                    Vec2f(0)
+                );
+
+                position.x += size.width;
+            }
+        }
+
 
         /**
          * Render bird
