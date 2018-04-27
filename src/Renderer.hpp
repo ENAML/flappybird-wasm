@@ -164,11 +164,12 @@ public:
         // static const Color COLOR_BIRD = (Color){255, 255, 255, 255};
         static const Color COLOR_DEBUG = (Color){255, 0, 113, 255};
 
+        static const std::string TEX_BACKGROUND = "background-day";
+        static const std::string TEX_PIPE = "pipe-green";
+        static const std::string TEX_FLOOR = "base";
         static const std::string TEX_BIRD_0 = "bluebird-downflap";
         static const std::string TEX_BIRD_1 = "bluebird-midflap";
         static const std::string TEX_BIRD_2 = "bluebird-upflap";
-        static const std::string TEX_PIPE = "pipe-green";
-        static const std::string TEX_FLOOR = "base";
 
         float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
         // float scale = 1.0;
@@ -206,6 +207,34 @@ public:
                 c
             );
         };
+
+
+        /**
+         * Render background
+         */
+        {
+            auto &texData = this->texMap.find(TEX_BACKGROUND)->second;
+
+            Vec2f size = texData.srcFrame.size;
+            Vec2f position = Vec2f(
+                fmod(-gameState.xOffset, size.width),
+                0
+            );
+
+            // printlog(1, "w: %d | x: %d", (int)size.width, (int)position.x);
+
+            while (position.x < state->screenWidth)
+            {
+                my_drawTexture(
+                    texData.tex,
+                    texData.srcFrame,
+                    Rectf(position * zoomScale, size * zoomScale),
+                    Vec2f(0)
+                );
+
+                position.x += size.width;
+            }
+        }
 
 
         /**
@@ -275,13 +304,14 @@ public:
             auto &texData = this->texMap.find(TEX_FLOOR)->second;
 
             Vec2f size = texData.srcFrame.size;
-            Vec2f position = Vec2f(-gameState.xOffset, floorY);
+            Vec2f position = Vec2f(
+                fmod(-gameState.xOffset, size.width),
+                floorY
+            );
 
-            const int MAX_W = state->screenWidth;
+            // printlog(1, "w: %d | x: %d", (int)size.width, (int)position.x);
 
-            position.x = fmod(position.x, MAX_W);
-
-            while (position.x < (float)MAX_W)
+            while (position.x < state->screenWidth)
             {
                 my_drawTexture(
                     texData.tex,
