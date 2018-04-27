@@ -25,7 +25,7 @@ const float birdSize = 15.; // 20.;     // bird radius
 const float gravity = 1400.;
 const float birdX = 50.;
 const float defaultBirdY = 50.;
-// const float pipeHeight = 350.;
+// const float pipeHeight = 350.; // TODO: UNUSED; REMOVE
 const float floorY = 500.;
 
 
