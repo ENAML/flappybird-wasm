@@ -20,8 +20,8 @@ using namespace std;
 const float jumpForce = -500.;
 const float speed = 175.;
 const float pipeWidth = 50.;
-const float halfGap = 70.;              // gap btwn pipes / 2.
-const float birdSize = 15.; // 20.;     // bird radius
+const float halfGap = 90.; // 70.; 
+const float birdSize = 15.; // 20.; // bird radius
 const float gravity = 1400.;
 const float birdX = 50.;
 const float defaultBirdY = 50.;
@@ -43,10 +43,10 @@ public:
     float birdY = defaultBirdY;
     float birdVY = 0.;
     vector<Vec2f> pipes = {
-        Vec2f(200., 100.),
-        Vec2f(400., 100.),
-        Vec2f(600., 100.),
-        Vec2f(800., 100.),
+        Vec2f(200., 130.),
+        Vec2f(400., 130.),
+        Vec2f(600., 130.),
+        Vec2f(800., 130.),
     };
     float xOffset = 0;
     RunningT running = RunningT::Running;
