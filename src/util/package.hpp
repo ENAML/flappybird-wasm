@@ -33,6 +33,3 @@
 #include "Vector.hpp"
 #include "Matrix.hpp"
 #include "Rect.hpp"
-
-//System Time, Input, and Audio
-// #include "Timer.hpp"

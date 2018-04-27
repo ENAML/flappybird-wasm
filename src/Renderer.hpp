@@ -271,7 +271,6 @@ public:
          * Render bird
          */
         {
-            // draw texture
             int frame = (int)(gameState.xOffset / 20) % 4;
             
             const string* texKey;
@@ -323,36 +322,7 @@ public:
                 COLOR_DEBUG
             );
         }
-
-
-        // /**
-        //  * TEST TEX RENDER
-        //  * ---------------
-        //  */ 
-        // {
-        //     static float rot = 0;
-
-        //     auto& texData = this->texMap.find(TEX_BIRD_0)->second;
-
-        //     Vec2f position = Vec2f(200, 100) * zoomScale;
-        //     Vec2f size = texData.srcFrame.size * zoomScale * 2;
-        //     Rectf destRect(position, size);
-            
-        //     Vec2f offset(size / 2);
-        //     my_drawTexture(
-        //         texData.tex,
-        //         texData.srcFrame,
-        //         destRect,
-        //         offset,
-        //         rot
-        //     );
-
-        //     rot++;
-        // }
-
-
-
-
+        
         
 
         /**
