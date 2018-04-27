@@ -65,19 +65,10 @@ void my_drawTexture(
 }
 
 
-// TODO: remove
-struct Textures
-{
-    Texture2D bird;
-};
-
-
 class Renderer
 {
 public:
     TextureMap texMap;
-
-    Textures mTextures;
 
     Color mBGColor;
 
@@ -126,10 +117,6 @@ public:
     void init()
     {
         // load textures
-
-        // TODO: REMOVE
-        this->mTextures.bird = LoadTexture("resources/flappy_assets/sprites/bluebird-downflap.png"); // 34 x 24
-
         this->texMap = Resource::loadTextures();
     }
 
@@ -164,10 +151,12 @@ public:
         this->mCamera.zoom = this->zoomCamera ? this->zoomAmount : 1.0;
         Begin2dMode(this->mCamera);
 
-        const float DEBUG_OPACITY = 0.3;
+        static const float DEBUG_OPACITY = 0.3;
 
-        const Color BIRD_COLOR = (Color){255, 255, 255, 255};
-        const Color PIPE_COLOR = (Color){255, 0, 113, 255};
+        static const Color BIRD_COLOR = (Color){255, 255, 255, 255};
+        static const Color PIPE_COLOR = (Color){255, 0, 113, 255};
+
+        static const std::string BIRD_TEX_0 = "bluebird-downflap";
 
         float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
         // float scale = 1.0;
@@ -229,13 +218,34 @@ public:
             );
         }
 
-        // draw bird 
-        draw_circle(
-            Vec2f(birdX, state->gameState.birdY),
-            birdSize,
-            BIRD_COLOR
-        );
-        
+        /**
+         * Render bird
+         */
+        {
+            // draw texture
+            auto& texData = this->texMap.find(BIRD_TEX_0)->second;
+
+            Vec2f position = Vec2f(birdX, state->gameState.birdY) * zoomScale;
+            Vec2f size = texData.srcFrame.size * zoomScale * 2;
+            Rectf destRect(position, size);
+            
+            Vec2f offset(size / 2);
+            my_drawTexture(
+                texData.tex,
+                texData.srcFrame,
+                destRect,
+                offset,
+                0
+            );
+
+            // DEBUG: draw shape
+            draw_circle(
+                Vec2f(birdX, state->gameState.birdY),
+                birdSize,
+                BIRD_COLOR
+            );
+        }
+
 
         /**
          * TEST TEX RENDER
@@ -243,31 +253,29 @@ public:
          */ 
         static float rot = 0;
 
-        // test with single sprite img
-        {
-            Texture2D tex = this->mTextures.bird;
-            Rectf srcRect(0, 0, tex.width, tex.height);
+        // // test with single sprite img
+        // {
+        //     Texture2D tex = this->mTextures.bird;
+        //     Rectf srcRect(0, 0, tex.width, tex.height);
 
-            Vec2f position = Vec2f(100, 100) * zoomScale;
-            Vec2f size = Vec2f(tex.width, tex.height) * zoomScale * 2;
-            Rectf destRect(position, size);
+        //     Vec2f position = Vec2f(100, 100) * zoomScale;
+        //     Vec2f size = Vec2f(tex.width, tex.height) * zoomScale * 2;
+        //     Rectf destRect(position, size);
             
-            Vec2f offset(size / 2);
-            my_drawTexture(
-                tex,
-                srcRect,
-                destRect,
-                offset,
-                rot
-            );
-        }
+        //     Vec2f offset(size / 2);
+        //     my_drawTexture(
+        //         tex,
+        //         srcRect,
+        //         destRect,
+        //         offset,
+        //         rot
+        //     );
+        // }
 
         // test with atlas
         {
 
-            static const std::string bird_key = "bluebird-downflap";
-
-            auto& texData = this->texMap.find(bird_key)->second;
+            auto& texData = this->texMap.find(BIRD_TEX_0)->second;
 
             Vec2f position = Vec2f(200, 100) * zoomScale;
             Vec2f size = texData.srcFrame.size * zoomScale * 2;
