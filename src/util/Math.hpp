@@ -65,8 +65,18 @@ public:
     // }
 
     // returns value btwn 'src' and 'dest'
-    static float lerp(const float& src, const float& dest, const float& pct)
+    static float lerp(const float& pct, const float& src, const float& dest)
     {
         return src + (dest - src)*pct;
+    }
+
+    // maps 'srcVal' in range [srcMin, srcMax] to range [destMin, destMax]
+    static float map(
+        const float& srcVal,
+        const float& srcMin, const float& srcMax,
+        const float& destMin, const float& destMax
+    ) {
+        auto pct = (srcVal - srcMin) / (srcMax - srcMin);
+        return lerp(pct, destMin, destMax);
     }
 };

@@ -171,6 +171,9 @@ public:
         // float scale = 1.0;
 
 
+        auto& gameState = state->gameState;
+
+
         auto draw_rect = [&](Vec2f position, Vec2f size, Color c)
         {
             DrawRectangleLines(
@@ -207,7 +210,6 @@ public:
          */
         for (auto& pipe : state->gameState.pipes)
         {
-            auto& gameState = state->gameState;
 
             // get texture
             auto& texData = this->texMap.find(TEX_PIPE)->second;
@@ -276,12 +278,18 @@ public:
             
             Vec2f offset(size / 2);
 
+            float rotation = Math::map(
+                gameState.birdVY,
+                -500, 1100, //-200, 1200,
+                Math::degrees(-1), Math::degrees(1)
+            );
+
             my_drawTexture(
                 texData.tex,
                 texData.srcFrame,
                 destRect,
                 offset,
-                0
+                rotation
             );
 
             // DEBUG: draw shape
