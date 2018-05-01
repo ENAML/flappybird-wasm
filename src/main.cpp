@@ -68,7 +68,11 @@ void game_update()
     // handle input 
     //---------------------------------------------------------------------------
     {
-        game.state.mousePressed = IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE);
+        game.state.mousePressed = (
+            IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || // click down
+            IsKeyPressed(KEY_SPACE) || // space bar down
+            IsGestureDetected(GESTURE_TAP) || IsGestureDetected(GESTURE_DOUBLETAP) // touch down
+        );
         game.state.mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
 
         game.state.mousePos = GetMousePosition();
@@ -90,7 +94,13 @@ void game_update()
             game.state.guiVisible = game.state.guiVisible ? false : true;
         }
     }
-    // println("mousePos{x: %f, y: %f}", getMouseX, game.state.mousePos.y);
+    // 
+
+    // auto tp = GetTouchPosition(0);
+    // println("touch pos {x: %f, y: %f}", tp.x, tp.y);
+    // auto tapped = IsGestureDetected(GESTURE_TAP) || IsGestureDetected(GESTURE_DOUBLETAP); 
+    // if (tapped)
+    //     println("tapped! [%d]", (int)rng::range(0, 100));
 
 
     //---------------------------------------------------------------------------

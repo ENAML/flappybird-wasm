@@ -18,15 +18,13 @@ PLATFORM ?= PLATFORM_DESKTOP
 
 
 # output binary
-BIN := app
+BIN := main
 BIN_DIR := build
 
 # source files
 # SRCS := \
-#     src/app.cpp \
-# 	src/TileMap.cpp \
-# 	src/IO.cpp \
-# 	src/gui.c
+#     src/main.cpp \
+# 	  src/gui.c
 SRCS := $(wildcard src/*.cpp)
 SRCS += $(wildcard src/*.c)
 SRCS += $(wildcard src/util/*.cpp)
