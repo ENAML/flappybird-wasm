@@ -8,6 +8,9 @@
 - [x] Add score rendering
 - [ ] Clean up codebase
 - [ ] Move forked version of raylib into project 
+- [ ] Add better logging
+    - see: https://github.com/gabime/spdlog 
+- [ ] 
 
 ## Web Compile
 - [ ] Clean up Makefile emscripten compilation
