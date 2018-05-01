@@ -5,7 +5,7 @@
 # ----
 
 ## Main
-- [ ] Add score rendering
+- [x] Add score rendering
 - [ ] Clean up codebase
 - [ ] Move forked version of raylib into project 
 
