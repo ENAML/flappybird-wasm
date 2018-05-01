@@ -118,7 +118,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
     EMSC_FLAGS := 
-	EMSC_FLAGS += -O3 # optimize
+	# EMSC_FLAGS += -O3 # optimize
 	EMSC_FLAGS += --memory-init-file 0
 	EMSC_FLAGS += -D_DEFAULT_SOURCE
 	EMSC_FLAGS += -s USE_GLFW=3 
@@ -128,6 +128,9 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	EMSC_FLAGS += --preload-file resources/production
 	# EMSC_FLAGS += -s ELIMINATE_DUPLICATE_FUNCTIONS=1 # slow to run!
 	EMSC_FLAGS += --shell-file platform/web/shell.html
+	# EMSC_FLAGS += --cpuprofiler # CPU visualizer
+	# EMSC_FLAGS += --memoryprofiler # memory visualizer
+
 
 	CPPFLAGS += $(EMSC_FLAGS)
 	LDFLAGS += $(EMSC_FLAGS)

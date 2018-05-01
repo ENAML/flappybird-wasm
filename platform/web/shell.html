@@ -12,10 +12,10 @@
     <meta name="viewport" content="width=device-width">
     
     <style>
-      body {
+      html, body {
         font-family: arial;
         margin: 0;
-        padding: none;
+        padding: 0;
       }
       
       #header_part {
@@ -26,17 +26,24 @@
       
       .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
       div.emscripten { text-align: center; }      
-      div.emscripten_border { border: 1px solid black; }
       
+      .emscripten_wrapper {
+        border: 0px none;
+        margin: 0 auto;
+        /* width: 400px; */
+        /* height: 600px; */
+        max-width: 400px;
+        height: auto;
+      }
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
       canvas.emscripten {
         border: 0px none;
         margin: 0;
         background: black;
-        /* width: 100%; */
-        /* height: 100%; */
-        width: 400px;
-        height: 600px;
+        /* width: 400px; */
+        /* height: 600px; */
+        width: 100%;
+        height: auto;
       }
       
       #emscripten_logo {
@@ -139,7 +146,7 @@
         </div>
     </div>
     
-    <div class="emscripten_border">
+    <div class="emscripten_wrapper">
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
     
