@@ -241,7 +241,7 @@ void game_update()
                         if (scored)
                         {
                             gameState.score += 1;
-                            printlog(0, "score!: %d", gameState.score);
+                            // printlog(0, "score!: %d", gameState.score);
                         }
                     }
 
