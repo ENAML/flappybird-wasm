@@ -217,16 +217,16 @@ void game_update()
                     // if (hitFloor)
                     //     printlog(1, "hit floor :(");
 
-                    // /**
-                    //  * handle collisions
-                    //  */
-                    // if (hitPipe || hitFloor)
-                    // {
-                    //     gameState.running = RunningT::Dead;
+                    /**
+                     * handle collisions
+                     */
+                    if (hitPipe || hitFloor)
+                    {
+                        gameState.running = RunningT::Dead;
 
-                    //     if (hitPipe)
-                    //         gameState.birdVY = jumpForce;
-                    // }
+                        if (hitPipe)
+                            gameState.birdVY = jumpForce;
+                    }
                     
                     /**
                      * update score
