@@ -389,6 +389,8 @@ void Renderer::renderEntities(State *state)
         const int x_incr = 3; 
         Vec2f position(10, 50);
 
+        // TODO:
+        // use int division & modulo to get sprites instead of creating this spring
         auto score_str = std::to_string(gameState.score);
 
         for (char c : score_str)
