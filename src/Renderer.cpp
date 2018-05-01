@@ -1,6 +1,6 @@
 /**
  * -----------------------------------------------------------------------------
- * Renderer
+ * renderer.cpp
  * -----------------------------------------------------------------------------
  */
 #include <string>
@@ -11,10 +11,10 @@
 #include "Renderer.hpp"
 
 
-/*
-    Draw a part of a texture (defined by a rectangle) with 'pro' parameters
-    NOTE: origin is relative to destination rectangle size
-    see: raylib's "DrawTexturePro()"
+/**
+ * Draw a part of a texture (defined by a rectangle) with 'pro' parameters
+ * NOTE: origin is relative to destination rectangle size
+ * see: raylib's "DrawTexturePro()"
  */
 void my_drawTexture(
     Texture2D texture,
@@ -76,7 +76,6 @@ void my_drawTexture(
  * Renderer Implementation
  * -----------------------
  */
-
 void Renderer::init()
 {
     // load textures
@@ -85,26 +84,18 @@ void Renderer::init()
 
 void Renderer::render(State *state)
 {
+    // pre-render
     BeginDrawing();
-
     ClearBackground(this->mBGColor);
 
-    /**
-     * draw entities
-     */
+    // render entities
     this->renderEntities(state);
     
-
-    /**
-     * draw gui
-     */
+    // render gui
     if (state->guiVisible)
-    {
         this->renderGui(state);
-    }
 
-
-    // complete render 
+    // post-render
     EndDrawing();            
 }
 

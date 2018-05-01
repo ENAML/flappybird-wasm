@@ -1,4 +1,8 @@
-
+/**
+ * -----------------------------------------------------------------------------
+ * main.cpp
+ * -----------------------------------------------------------------------------
+ */
 #include "common.hpp"
 
 #include "State.hpp"
@@ -55,18 +59,20 @@ App game;
 
 void game_update()
 {
-    //---------------------------------------------------------------------------
-    // update time 
-    //---------------------------------------------------------------------------
+    /**
+     * update time 
+     * ------------
+     */
     game.state.tick += 1;
     game.state.frameTime = GetFrameTime();
     // printlog(1, "%f", game.state.frameTime);
     game.state.fps = (int)(1.0f / game.state.frameTime);
     // printlog(0, "fps: %d | frameTime %f", game.state.fps, game.state.frameTime);
     
-    //---------------------------------------------------------------------------
-    // handle input 
-    //---------------------------------------------------------------------------
+    /**
+     * handle input 
+     * -------------
+     */
     {
         game.state.mousePressed = (
             IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || // click down
@@ -94,7 +100,6 @@ void game_update()
             game.state.guiVisible = game.state.guiVisible ? false : true;
         }
     }
-    // 
 
     // auto tp = GetTouchPosition(0);
     // println("touch pos {x: %f, y: %f}", tp.x, tp.y);
@@ -103,9 +108,10 @@ void game_update()
     //     println("tapped! [%d]", (int)rng::range(0, 100));
 
 
-    //---------------------------------------------------------------------------
-    // Update
-    //---------------------------------------------------------------------------
+    /**
+     * Update
+     * ------
+     */
     if (
         game.state.canUpdate &&
         (
@@ -262,9 +268,10 @@ void game_update()
     }
 
 
-    //---------------------------------------------------------------------------
-    // Draw
-    //---------------------------------------------------------------------------
+    /**
+     * Draw
+     * ------
+     */
     game.renderer.render(
         &game.state
     );
@@ -274,9 +281,11 @@ void game_update()
     //     println("[DEBUG : %5i] ", game.state.tick);
     // }
 
-    //---------------------------------------------------------------------------
-    // finish game loop iteration
-    //---------------------------------------------------------------------------
+
+    /**
+     * finish game loop iteration
+     * --------------------------
+     */
     game.state.tick++;
 }
 
@@ -289,17 +298,17 @@ void game_update()
  */
 int main(int argc, char **argv)
 {
- 	//------------------------------------------------------------------------------ 
-	// TEST / DEBUG
-	//------------------------------------------------------------------------------ 
-
+    /**
+     * TEST / DEBUG
+     * ------------
+     */
     // return 0;
     
-    
- 	//------------------------------------------------------------------------------ 
-	// Initialization
-	//------------------------------------------------------------------------------ 
 
+    /**
+     * Initialization
+     * --------------
+     */
     SetConfigFlags(
         // FLAG_SHOW_LOGO |
         FLAG_VSYNC_HINT |
@@ -317,13 +326,9 @@ int main(int argc, char **argv)
     game.renderer.init();
 
     /**
-     * init game
-     */
-    // TODO
-
-    //------------------------------------------------------------------------------ 
-    // BEGIN Main game loop
-    //------------------------------------------------------------------------------    
+     * BEGIN Main game loop
+     * --------------------
+     */    
     #if defined(PLATFORM_WEB)
         emscripten_set_main_loop(game_update, 0, 1);
     #else
@@ -335,10 +340,10 @@ int main(int argc, char **argv)
         }
     #endif
 
-	//------------------------------------------------------------------------------   
-	// De-Initialization
-	//------------------------------------------------------------------------------    
-
+    /**
+     * De-Initialization
+     * -----------------
+     */
     // Close window and OpenGL context
 	CloseWindow();        
 

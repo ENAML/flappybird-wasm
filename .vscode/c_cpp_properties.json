@@ -9,8 +9,8 @@
                 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
                 "/usr/include",
                 "${workspaceRoot}",
-                "${workspaceRoot}/src/extern",
-                "${workspaceRoot}/src/extern/variant/include"
+                "${workspaceRoot}/extern",
+                "${workspaceRoot}/extern/variant/include"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
@@ -32,7 +32,7 @@
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++11"
         },
         {
             "name": "Linux",
