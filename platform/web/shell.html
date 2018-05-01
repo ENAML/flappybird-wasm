@@ -138,7 +138,7 @@
         <div class="emscripten" id="status">Downloading...</div>
 
         <span id='controls'>
-          <span><input type="button" value="Fullscreen" onclick="Module.requestFullscreen(false, false)"></span>
+          <!-- <span><input type="button" value="Fullscreen" onclick="Module.requestFullscreen(false, false)"></span> -->
         </span>
 
         <div class="emscripten">
@@ -153,6 +153,7 @@
     <!-- <textarea id="output" rows="8"></textarea> -->
 
     <script type='text/javascript'>
+      var headerElement = document.getElementById('header_part');
       var statusElement = document.getElementById('status');
       var progressElement = document.getElementById('progress');
       var spinnerElement = document.getElementById('spinner');
@@ -208,7 +209,11 @@
             progressElement.value = null;
             progressElement.max = null;
             progressElement.hidden = true;
-            if (!text) spinnerElement.style.display = 'none';
+            if (!text)
+            {
+              spinnerElement.style.display = 'none';
+              headerElement.style.display = 'none';
+            }
           }
           statusElement.innerHTML = text;
         },
