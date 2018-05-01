@@ -40,8 +40,12 @@ enum class RunningT {
 class GameState
 {
 public:
+    RunningT running = RunningT::Running;
+    int score = 125; // 0;
     float birdY = defaultBirdY;
     float birdVY = 0.;
+    float xOffset = 0;
+    float birdRotation = 0; // handled / updated by renderer only
     vector<Vec2f> pipes = {
         Vec2f(0), 
         Vec2f(0), 
@@ -49,13 +53,7 @@ public:
         Vec2f(0), 
     };
 
-    float xOffset = 0;
-
-    float birdRotation = 0; // handled / updated by renderer only
-
-    RunningT running = RunningT::Running;
-    int score = 0;
-
+    // constructor
     GameState()
     {
         printlog(0, "creating GameState");
@@ -73,7 +71,7 @@ public:
         }
     }
 
-
+    // destructor
     virtual ~GameState()
     {
         printlog(0, "destroying GameState");

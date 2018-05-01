@@ -4,11 +4,70 @@
  * -----------------------------------------------------------------------------
  */
 #include <string>
+#include <iostream>
 
 #include "rlgl.h"
 #include "gui.h"
 
 #include "Renderer.hpp"
+
+/**
+ * global static vars
+ */
+static const float DEBUG_OPACITY = 0.3;
+
+// static const Color COLOR_BIRD = (Color){255, 255, 255, 255};
+static const Color COLOR_DEBUG = (Color){255, 0, 113, 255};
+
+// TEXTURE KEYS
+static const std::string TEX_BACKGROUND = "background-day";
+static const std::string TEX_PIPE = "pipe-green";
+static const std::string TEX_FLOOR = "base";
+static const std::string TEX_BIRD_0 = "yellowbird-downflap";
+static const std::string TEX_BIRD_1 = "yellowbird-midflap";
+static const std::string TEX_BIRD_2 = "yellowbird-upflap";
+static const std::string TEX_NUM_0 = "num-0";
+static const std::string TEX_NUM_1 = "num-1";
+static const std::string TEX_NUM_2 = "num-2";
+static const std::string TEX_NUM_3 = "num-3";
+static const std::string TEX_NUM_4 = "num-4";
+static const std::string TEX_NUM_5 = "num-5";
+static const std::string TEX_NUM_6 = "num-6";
+static const std::string TEX_NUM_7 = "num-7";
+static const std::string TEX_NUM_8 = "num-8";
+static const std::string TEX_NUM_9 = "num-9";
+
+const std::string& num_char_to_key(char i)
+{
+    assert(i >= '0');
+    assert(i <= '9');
+
+    switch (i)
+    {
+        case '0':
+            return TEX_NUM_0;
+        case '1':
+            return TEX_NUM_1;
+        case '2':
+            return TEX_NUM_2;
+        case '3':
+            return TEX_NUM_3;
+        case '4':
+            return TEX_NUM_4;
+        case '5':
+            return TEX_NUM_5;
+        case '6':
+            return TEX_NUM_6;
+        case '7':
+            return TEX_NUM_7;
+        case '8':
+            return TEX_NUM_8;
+        case '9':
+            return TEX_NUM_9;
+        default:
+            return TEX_NUM_0;
+    }
+}
 
 
 /**
@@ -101,21 +160,12 @@ void Renderer::render(State *state)
 
 void Renderer::renderEntities(State *state)
 {
+
+
     // set camera zoom (this affects everything that is rendered)
     this->mCamera.zoom = this->zoomCamera ? this->zoomAmount : 1.0;
     Begin2dMode(this->mCamera);
 
-    static const float DEBUG_OPACITY = 0.3;
-
-    // static const Color COLOR_BIRD = (Color){255, 255, 255, 255};
-    static const Color COLOR_DEBUG = (Color){255, 0, 113, 255};
-
-    static const std::string TEX_BACKGROUND = "background-day";
-    static const std::string TEX_PIPE = "pipe-green";
-    static const std::string TEX_FLOOR = "base";
-    static const std::string TEX_BIRD_0 = "yellowbird-downflap";
-    static const std::string TEX_BIRD_1 = "yellowbird-midflap";
-    static const std::string TEX_BIRD_2 = "yellowbird-upflap";
 
     float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
     // float scale = 1.0;
@@ -124,6 +174,11 @@ void Renderer::renderEntities(State *state)
     auto& gameState = state->gameState;
 
 
+    /**
+     * helper fns
+     * TODO:
+     * - put these in renderer or someplace else
+     */
     auto draw_rect = [&](Vec2f position, Vec2f size, Color c)
     {
         DrawRectangleLines(
@@ -188,7 +243,6 @@ void Renderer::renderEntities(State *state)
      */
     for (auto& pipe : gameState.pipes)
     {
-
         // get texture
         auto& texData = this->texMap.find(TEX_PIPE)->second;
         Vec2f size = texData.srcFrame.size;
@@ -205,7 +259,6 @@ void Renderer::renderEntities(State *state)
 
         // btm render data
         Rectf btmDestRect(btmPos * zoomScale, size * zoomScale);
-
 
         // draw top pipe
         my_drawTexture(
@@ -327,6 +380,43 @@ void Renderer::renderEntities(State *state)
         //     COLOR_DEBUG
         // );
     }
+
+
+    /**
+     * Render score
+     */
+    {
+        const int x_incr = 3; 
+        Vec2f position(10, 50);
+
+        auto score_str = std::to_string(gameState.score);
+
+        for (char c : score_str)
+        {
+            auto& numkey = num_char_to_key(c);
+            auto& texData = this->texMap.find(numkey)->second;
+
+            Vec2f size = texData.srcFrame.size;
+
+            Rectf destRect(
+                position * zoomScale,
+                size * zoomScale
+            );
+
+            my_drawTexture(
+                texData.tex,
+                texData.srcFrame,
+                destRect,
+                Vec2f(0)
+            );
+            
+            position.x += size.width + x_incr;
+
+            // std::cout << c << ", ";
+        }
+        // std::cout << std::endl;
+    }
+
     
 
     /**
