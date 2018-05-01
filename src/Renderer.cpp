@@ -386,12 +386,23 @@ void Renderer::renderEntities(State *state)
      * Render score
      */
     {
-        const int x_incr = 3; 
-        Vec2f position(10, 50);
+        const int x_incr = 5; 
 
         // TODO:
         // use int division & modulo to get sprites instead of creating this spring
         auto score_str = std::to_string(gameState.score);
+
+        int len = score_str.length();
+        // TODO: for better results compute this per-digit (not all have same width)
+        int sprite_width = this->texMap.find(TEX_NUM_0)->second.srcFrame.size.width; 
+        int total_width = len*sprite_width + (len - 1)*x_incr; 
+        int half_width = total_width / 2;
+        int center_x = state->screenWidth / 2;
+        int start_x = center_x - half_width;
+        start_x -= 10; // quick fix for above TODO
+
+
+        Vec2f position(start_x, 50);
 
         for (char c : score_str)
         {

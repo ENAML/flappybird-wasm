@@ -41,7 +41,7 @@ class GameState
 {
 public:
     RunningT running = RunningT::Running;
-    int score = 125; // 0;
+    int score = 0;
     float birdY = defaultBirdY;
     float birdVY = 0.;
     float xOffset = 0;
