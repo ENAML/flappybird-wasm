@@ -7,7 +7,8 @@
 
 
 # define paths
-RAYLIB_PATH = ~/Projects/tests/raylib
+# RAYLIB_PATH = ~/Projects/tests/raylib
+RAYLIB_PATH = ./extern/raylib
 EMSCRIPTEN_PATH = ~/Projects/tests/emsdk
 
 
@@ -35,13 +36,21 @@ SRCS := $(filter-out src/tests.c, $(SRCS)) #ignore `tests.c`
 # - -I./src 
 # - -I./extern 
 # - -L$(RAYLIB_PATH)/release/include
-INCLUDES := -I. -I./src -I./extern -I./extern/variant/include
+INCLUDES := -I.
+INCLUDES += -I./src
+INCLUDES += -I./extern
+# INCLUDES += -I./extern/variant/include
+INCLUDES += -I$(RAYLIB_PATH)/release/include
 
 # include libraries
 # - -L.
 # - -L/usr/local/lib 
 # - -L$(RAYLIB_PATH)/release/libs/osx
-LDLIBS := -L. -L/usr/local/lib -lm -lraylib
+LDLIBS := -L. 
+LDLIBS += -L/usr/local/lib
+LDLIBS += -L$(RAYLIB_PATH)/release/libs/osx
+LDLIBS += -lm
+LDLIBS += -lraylib
 
 # compiler warnings
 WARNINGS := -Wall #-Wextra #-pedantic 

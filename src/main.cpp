@@ -320,7 +320,7 @@ int main(int argc, char **argv)
 	InitWindow(
         game.state.screenWidth * game.renderer.platformRenderScale,
         game.state.screenHeight * game.renderer.platformRenderScale,
-        (void *)"FLAPPY"
+        "FLAPPY"
     );
 
     game.renderer.init();
