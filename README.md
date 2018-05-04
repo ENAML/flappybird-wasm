@@ -1,9 +1,12 @@
+Build Instructions
+------------------
+- Clone repo & submodules: `git clone --recurse-submodules https://github.com/ENAML/flappy.git`
+
+[TODO]
 
 
-# ----
-# TODO 
-# ----
-
+TODO 
+-----
 ## Main
 - [x] Add score rendering
 - [ ] Clean up codebase
@@ -27,10 +30,8 @@
 - [ ] Add particle fx
 
 
-# ----------------
-# Building for Web
-# ----------------
-
+Building for Web
+----------------
 ## Instructions
 - 1) Download and install emscripten (http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html)
 - 2) run `source ./emsdk_env.sh` from `emsdk/` directory to set environment variables
@@ -48,11 +49,8 @@
     - https://hacks.mozilla.org/2018/01/shrinking-webassembly-and-javascript-code-sizes-in-emscripten/
 
 
-
-# --------
-# C++ Refs
-# --------
-
+C++ Refs
+--------
 ## Lambda functions
 - http://www.cplusplus.com/reference/algorithm/remove_if/
 - https://studiofreya.com/cpp/std-remove_if-with-lambda/
