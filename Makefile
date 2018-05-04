@@ -26,6 +26,8 @@ PLATFORM ?= PLATFORM_DESKTOP
 # output binary
 BIN := main
 BIN_DIR := build
+# for github pages
+WEB_PUBLIC_DIR := docs
 
 # source files
 # SRCS := \
@@ -98,6 +100,7 @@ $(shell mkdir -p $(dir $(TMP_DIR)) >/dev/null)
 $(shell mkdir -p $(dir $(OBJS)) >/dev/null)
 $(shell mkdir -p $(dir $(DEPS)) >/dev/null)
 $(shell mkdir -p $(BIN_DIR) >/dev/null)
+$(shell mkdir -p $(WEB_PUBLIC_DIR) >/dev/null)
 
 
 # C compiler
@@ -223,6 +226,15 @@ web:
 .PHONY: run-web
 run-web:
 	$(EMSCRIPTEN_PATH)/emrun --browser chrome $(BIN_DIR)/index.html
+
+# WEB
+.PHONY: deploy-web
+deploy-web: clean
+	$(RM) $(WEB_PUBLIC_DIR)/*
+	make web
+	mv $(BIN_DIR)/* $(WEB_PUBLIC_DIR) 
+
+
 
 .PHONY: help
 help:

@@ -70,14 +70,14 @@ TextureMap Resource::loadTextures()
         texMap.insert(entry);
     }
 
-    for (auto& entry : texMap)
-    {
-        // TODO: switch to log printing?
-        cout
-        << "TextureData loaded: "
-        << entry.first 
-        << endl;
-    }
+    // for (auto& entry : texMap)
+    // {
+    //     // TODO: switch to log printing?
+    //     cout
+    //     << "TextureData loaded: "
+    //     << entry.first 
+    //     << endl;
+    // }
 
     return texMap;
 }
