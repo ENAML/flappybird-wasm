@@ -157,7 +157,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	# EMSC_FLAGS += --memoryprofiler # memory visualizer
 	EMSC_FLAGS += -O3 # optimize
 	EMSC_FLAGS += -g0 # removes all debug info from JS code (function names, etc)
-	# EMSC_FLAGS +=  --closure 1 # run closure compiler (NOTE: '-g0' required for this)
+	EMSC_FLAGS +=  --closure 1 # run closure compiler (NOTE: '-g0' required for this)
 
 	CPPFLAGS += $(EMSC_FLAGS)
 	LDFLAGS += $(EMSC_FLAGS)
