@@ -1,8 +1,12 @@
 Build Instructions
 ------------------
 - Clone repo & submodules: `git clone --recurse-submodules https://github.com/ENAML/flappy.git`
+- Build for desktop (OSX)
+    - `make`
+- Build for web
+    - `make web`
 
-[TODO]
+[TODO - add more info]
 
 
 TODO 

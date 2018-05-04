@@ -63,3 +63,4 @@ app
 test
 tests
 build
+.tmp
