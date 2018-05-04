@@ -69,9 +69,11 @@ OBJS := $(patsubst %,$(OBJDIR)/%.o,$(basename $(SRCS)))
 # dependency files, auto generated from source files
 DEPS := $(patsubst %,$(DEPDIR)/%.d,$(basename $(SRCS)))
 
-# compilers (at least gcc and clang) don't create the subdirectories automatically
+# Create required subdirectories
+# (compilers (at least gcc and clang) don't create the subdirectories automatically)
 $(shell mkdir -p $(dir $(OBJS)) >/dev/null)
 $(shell mkdir -p $(dir $(DEPS)) >/dev/null)
+$(shell mkdir -p $(BIN_DIR) >/dev/null)
 
 # C compiler
 CC := clang
