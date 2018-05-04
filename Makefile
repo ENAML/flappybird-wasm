@@ -9,8 +9,12 @@
 # define paths
 # RAYLIB_PATH = ~/Projects/tests/raylib
 RAYLIB_PATH = ./extern/raylib
+
+# set web compilers
+# (see: https://gist.github.com/rolandoam/5199237 for example)
 EMSDK_PATH = ~/Projects/tests/emsdk
 EMSCRIPTEN_VERSION = 1.37.39
+EMSCRIPTEN_PATH = $(EMSDK_PATH)/emscripten/$(EMSCRIPTEN_VERSION)
 
 
 # define compile target platform
@@ -118,9 +122,6 @@ LDFLAGS := -g -Wall
 # EMSCRIPTEN / HTML5:
 ifeq ($(PLATFORM),PLATFORM_WEB)
 
-	# set compilers
-	# (see: https://gist.github.com/rolandoam/5199237 for example)
-	EMSCRIPTEN_PATH = $(EMSDK_PATH)/emscripten/$(EMSCRIPTEN_VERSION)
 	CC = $(EMSCRIPTEN_PATH)/emcc
 	CXX = $(EMSCRIPTEN_PATH)/em++
 	LD = $(EMSCRIPTEN_PATH)/em++
@@ -187,7 +188,7 @@ dist: $(DISTFILES)
 
 .PHONY: clean
 clean:
-	$(RM) -r $(TMP_DIR)
+	$(RM) -r $(TMP_DIR) $(BIN_DIR)
 
 .PHONY: distclean
 distclean: clean
@@ -218,7 +219,10 @@ run: all
 web:
 	make PLATFORM=PLATFORM_WEB
 
-
+# WEB
+.PHONY: run-web
+run-web:
+	$(EMSCRIPTEN_PATH)/emrun --browser chrome $(BIN_DIR)/index.html
 
 .PHONY: help
 help:
