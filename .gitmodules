@@ -1,4 +1,4 @@
 [submodule "raylib"]
-	path = raylib
+	path = extern/raylib
 	url = https://github.com/ENAML/raylib.git
 	branch = master
