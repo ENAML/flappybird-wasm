@@ -1,6 +1,8 @@
 Build Instructions
 ------------------
 - Clone repo & submodules: `git clone --recurse-submodules https://github.com/ENAML/flappy.git`
+- build raylib (if necessary):
+    - `cd extern/raylib/src; make PLATFORM=PLATFORM_WEB` 
 - Build for desktop (OSX)
     - `make`
 - Build for web
