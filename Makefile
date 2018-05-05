@@ -138,6 +138,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	# - https://hacks.mozilla.org/2018/01/shrinking-webassembly-and-javascript-code-sizes-in-emscripten/
 	# - http://floooh.github.io/2016/08/27/asmjs-diet.html
 	# - https://github.com/kripken/emscripten/blob/master/src/settings.js
+	# - http://tristanpenman.com/blog/posts/2018/01/08/porting-an-asteroids-clone-to-javascript/
 	
 	#  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
     # -O2                        # if used, also set --memory-init-file 0
@@ -146,21 +147,33 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
     EMSC_FLAGS := 
-	# EMSC_FLAGS += -s WASM=1
+
+	
 	EMSC_FLAGS += -D_DEFAULT_SOURCE
 	EMSC_FLAGS += -s USE_GLFW=3 
 	EMSC_FLAGS += --preload-file resources/production
 	EMSC_FLAGS += --shell-file platform/web/shell.html
 	EMSC_FLAGS += --memory-init-file 0
 	EMSC_FLAGS += -s TOTAL_MEMORY=16777216 
+
+	# Use WASM
+	EMSC_FLAGS += -s WASM=1
+	EMSC_FLAGS += -s BINARYEN=1
+
+	# # Debugging / Profiling
 	# EMSC_FLAGS += -s ASSERTIONS=1 
-	# EMSC_FLAGS += -s ELIMINATE_DUPLICATE_FUNCTIONS=1 # slow to run!
+	# EMSC_FLATS += -s SAFE_HEAP=1
+	# EMSC_FLAGS += --emit-symbol-map
 	# EMSC_FLAGS += --profiling 
 	# EMSC_FLAGS += --cpuprofiler # CPU visualizer
 	# EMSC_FLAGS += --memoryprofiler # memory visualizer
+
+	# # Optimizations
 	EMSC_FLAGS += -O3 # optimize
 	EMSC_FLAGS += -g0 # removes all debug info from JS code (function names, etc)
+	EMSC_FLAGS += -s ELIMINATE_DUPLICATE_FUNCTIONS=1 # slow to run!
 	EMSC_FLAGS +=  --closure 1 # run closure compiler (NOTE: '-g0' required for this)
+
 
 	CPPFLAGS += $(EMSC_FLAGS)
 	LDFLAGS += $(EMSC_FLAGS)
@@ -225,7 +238,7 @@ web:
 # WEB
 .PHONY: run-web
 run-web:
-	$(EMSCRIPTEN_PATH)/emrun --browser chrome $(BIN_DIR)/index.html
+	http-server build
 
 # WEB
 .PHONY: deploy-web
