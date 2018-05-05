@@ -3,6 +3,8 @@
  * main.cpp
  * -----------------------------------------------------------------------------
  */
+
+#include <iostream>
 #include "common.hpp"
 
 #include "State.hpp"
@@ -66,7 +68,8 @@ void game_update()
     game.state.tick += 1;
     game.state.frameTime = GetFrameTime();
     // printlog(1, "%f", game.state.frameTime);
-    game.state.fps = (int)(1.0f / game.state.frameTime);
+    if (game.state.frameTime != 0)
+        game.state.fps = 1.0f / game.state.frameTime;
     // printlog(0, "fps: %d | frameTime %f", game.state.fps, game.state.frameTime);
     
     /**
