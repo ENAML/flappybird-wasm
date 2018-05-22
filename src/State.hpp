@@ -58,9 +58,9 @@ public:
     {
         printlog(0, "creating GameState");
 
+        // generate pipes
         int pipeX = 500;
         int incr = 200;
-
         for (auto& pipe : this->pipes)
         {
             pipe.x = pipeX;
@@ -78,14 +78,23 @@ public:
     }
 };
 
+class InputState
+{
+public:
+    bool mousePressed = false;
+    bool mouseDown = false;
+    Vec2f mousePressedPos;
+    Vec2f mouseDragPos;
+    Vec2f mousePos;
+    bool toggleGui = false;
+};
+
 
 class State
 {
 public:
     // config / debug
     bool canUpdate = true;
-    bool guiVisible = false;
-    bool debugDraw = false;
 
     // default is 1; the higher the number,
     // the slower the game (for debugging mostly)
@@ -100,13 +109,7 @@ public:
     int screenWidth = SCREEN_W;
     int screenHeight = SCREEN_H;
 
-    // input
-    bool mousePressed = false;
-    bool mouseDown = false;
-    Vector2 mousePressedPos = rlVec2(0, 0);
-    Vector2 mouseDragPos = rlVec2(0, 0);
-    Vector2 mousePos = rlVec2(0, 0);
-
+    InputState inputState;
     GameState gameState = GameState();
 
     // constructor

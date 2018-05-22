@@ -8,6 +8,7 @@
 #include "common.hpp"
 
 #include "State.hpp"
+#include "Input.hpp"
 #include "Renderer.hpp"
 #include "gui.h"
 
@@ -76,33 +77,7 @@ void game_update()
      * handle input 
      * -------------
      */
-    {
-        app.state.mousePressed = (
-            IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || // click down
-            IsKeyPressed(KEY_SPACE) || // space bar down
-            IsGestureDetected(GESTURE_TAP) || IsGestureDetected(GESTURE_DOUBLETAP) // touch down
-        );
-        app.state.mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
-
-        app.state.mousePos = GetMousePosition();
-        
-        if (app.state.mousePressed)
-        {
-            app.state.mousePressedPos = GetMousePosition();
-            // printlog(0, "[%i] mouse pressed", app.state.tick);
-        }
-
-        if (app.state.mouseDown)
-        {
-            app.state.mouseDragPos = GetMousePosition();
-        }
-
-        // toggle debug menu(s)
-        if (IsKeyPressed(KEY_G))
-        {
-            app.state.guiVisible = app.state.guiVisible ? false : true;
-        }
-    }
+    Input::update(app.state);
 
 
     /**
@@ -147,7 +122,7 @@ void game_update()
                      * update bird
                      */
                     // trigger jump
-                    if (state.mousePressed)
+                    if (state.inputState.mousePressed)
                         gameState.birdVY = jumpForce;
                     // update bird pos/vel
                     update_bird();
@@ -255,7 +230,7 @@ void game_update()
                 break;
             case RunningT::Restart:
                 {
-                    if (state.mousePressed)
+                    if (state.inputState.mousePressed)
                     {
                         state.gameState = GameState();
                     }

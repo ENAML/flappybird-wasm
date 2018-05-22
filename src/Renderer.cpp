@@ -3,7 +3,6 @@
  * renderer.cpp
  * -----------------------------------------------------------------------------
  */
-#include <string>
 #include <iostream>
 
 #include "rlgl.h"
@@ -141,6 +140,10 @@ void Renderer::init()
 
 void Renderer::render(State *state)
 {
+    // update stuff
+    if (state->inputState.toggleGui)
+        this->guiVisible = !this->guiVisible;
+        
     // pre-render
     BeginDrawing();
     ClearBackground(this->bgColor);
@@ -149,7 +152,7 @@ void Renderer::render(State *state)
     this->renderEntities(state);
     
     // render gui
-    if (state->guiVisible)
+    if (this->guiVisible)
         this->renderGui(state);
 
     // post-render
@@ -268,21 +271,23 @@ void Renderer::renderEntities(State *state)
             0
         );
 
-        // // DEBUG: draw outlines
-        // auto pipeSize = Vec2f(
-        //     pipeWidth, // actual width (hard-coded in state)
-        //     size.height
-        // ); 
-        // draw_rect(
-        //     topPos,
-        //     pipeSize,
-        //     COLOR_DEBUG 
-        // );
-        // draw_rect(
-        //     btmPos,
-        //     pipeSize,
-        //     COLOR_DEBUG 
-        // );
+        if (this->debugDraw) {
+            // DEBUG: draw outlines
+            auto pipeSize = Vec2f(
+                pipeWidth, // actual width (hard-coded in state)
+                size.height
+            ); 
+            draw_rect(
+                topPos,
+                pipeSize,
+                COLOR_DEBUG 
+            );
+            draw_rect(
+                btmPos,
+                pipeSize,
+                COLOR_DEBUG 
+            );
+        }
     }
 
     /**
@@ -360,12 +365,15 @@ void Renderer::renderEntities(State *state)
             gameState.birdRotation 
         );
 
-        // // DEBUG: draw shape
-        // draw_circle(
-        //     Vec2f(birdX, gameState.birdY),
-        //     birdSize,
-        //     COLOR_DEBUG
-        // );
+        if (this->debugDraw)
+        {
+            // DEBUG: draw shape
+            draw_circle(
+                Vec2f(birdX, gameState.birdY),
+                birdSize,
+                COLOR_DEBUG
+            );
+        }
     }
 
     /**
@@ -408,9 +416,7 @@ void Renderer::renderEntities(State *state)
             
             position.x += size.width + x_incr;
 
-            // std::cout << c << ", ";
         }
-        // std::cout << std::endl;
     }
 
     /**
@@ -423,12 +429,16 @@ void Renderer::renderEntities(State *state)
 void Renderer::renderGui(State *state)
 {
     // draw cursor sguff
-    if (state->mouseDown)
+    if (state->inputState.mouseDown)
     {
         // println("drawing cursor...");
         auto col = Fade(WHITE, 0.5);
-        DrawCircle(state->mouseDragPos.x, state->mouseDragPos.y, 5, col);
-        DrawCircle(state->mousePressedPos.x, state->mousePressedPos.y, 10, col);
+        DrawCircle(
+            state->inputState.mouseDragPos.x,
+            state->inputState.mouseDragPos.y, 5, col);
+        DrawCircle(
+            state->inputState.mousePressedPos.x,
+            state->inputState.mousePressedPos.y, 10, col);
     }
 
     static char guiTextBuf[1000];
@@ -480,10 +490,10 @@ void Renderer::renderGui(State *state)
      */
     // char *btnTitle = "Can Update";
     sprintf(guiTextBuf, "Debug Draw");
-    state->debugDraw = gui_toggleButton(
+    this->debugDraw = gui_toggleButton(
         (Rectangle){ x, yNext, width, heightBtn},
         guiTextBuf,
-        state->debugDraw
+        this->debugDraw
     );
     // println("Can upd: %i\n", state->canUpdate);
     yNext += padding + heightBtn;
