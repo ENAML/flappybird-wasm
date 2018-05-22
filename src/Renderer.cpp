@@ -7,15 +7,13 @@
 #include <iostream>
 
 #include "rlgl.h"
-#include "gui.h"
 
 #include "Renderer.hpp"
+#include "gui.h"
 
 /**
  * global static vars
  */
-static const float DEBUG_OPACITY = 0.3;
-
 // static const Color COLOR_BIRD = (Color){255, 255, 255, 255};
 static const Color COLOR_DEBUG = (Color){255, 0, 113, 255};
 
@@ -160,19 +158,14 @@ void Renderer::render(State *state)
 
 void Renderer::renderEntities(State *state)
 {
-
-
     // set camera zoom (this affects everything that is rendered)
     this->camera.zoom = this->zoomCamera ? this->zoomAmount : 1.0;
     Begin2dMode(this->camera);
 
-
     float zoomScale = (1.0 / this->camera.zoom) * this->platformRenderScale;
     // float scale = 1.0;
 
-
     auto& gameState = state->gameState;
-
 
     /**
      * helper fns
@@ -209,7 +202,6 @@ void Renderer::renderEntities(State *state)
         );
     };
 
-
     /**
      * Render background
      */
@@ -221,7 +213,6 @@ void Renderer::renderEntities(State *state)
             fmod(-gameState.xOffset / 2, size.width),
             0
         );
-
         // printlog(1, "w: %d | x: %d", (int)size.width, (int)position.x);
 
         while (position.x < state->screenWidth)
@@ -236,7 +227,6 @@ void Renderer::renderEntities(State *state)
             position.x += size.width;
         }
     }
-
 
     /**
      * Render pipes 
@@ -278,7 +268,6 @@ void Renderer::renderEntities(State *state)
             0
         );
 
-
         // // DEBUG: draw outlines
         // auto pipeSize = Vec2f(
         //     pipeWidth, // actual width (hard-coded in state)
@@ -307,7 +296,6 @@ void Renderer::renderEntities(State *state)
             fmod(-gameState.xOffset, size.width),
             floorY
         );
-
         // printlog(1, "w: %d | x: %d", (int)size.width, (int)position.x);
 
         while (position.x < state->screenWidth)
@@ -318,7 +306,6 @@ void Renderer::renderEntities(State *state)
                 Rectf(position * zoomScale, size * zoomScale),
                 Vec2f(0)
             );
-
             position.x += size.width;
         }
     }
@@ -381,7 +368,6 @@ void Renderer::renderEntities(State *state)
         // );
     }
 
-
     /**
      * Render score
      */
@@ -427,14 +413,11 @@ void Renderer::renderEntities(State *state)
         // std::cout << std::endl;
     }
 
-    
-
     /**
      * end camera 2d render
      */
     End2dMode();
 }
-
 
 
 void Renderer::renderGui(State *state)
@@ -448,12 +431,9 @@ void Renderer::renderGui(State *state)
         DrawCircle(state->mousePressedPos.x, state->mousePressedPos.y, 10, col);
     }
 
-
     static char guiTextBuf[1000];
-    
 
     // int screenWidth = state->screenWidth;
-
     int heightText = 15;
     int heightBtn = 20;        
     int heightSlider = 15;        
@@ -470,7 +450,6 @@ void Renderer::renderGui(State *state)
      */
     DrawRectangle(0, 0, width + padding*2, 300, Fade(BLACK, 0.8));
 
-    
     /**
      * render text
      */
@@ -481,9 +460,7 @@ void Renderer::renderGui(State *state)
     );
     yNext += heightText;
 
-
     yNext += padding;
-
 
     /**
      * render button
@@ -510,7 +487,6 @@ void Renderer::renderGui(State *state)
     );
     // println("Can upd: %i\n", state->canUpdate);
     yNext += padding + heightBtn;
-
 
     /**
      * render button
@@ -540,7 +516,6 @@ void Renderer::renderGui(State *state)
         2.0 
     );
     yNext += padding + heightSlider;                
-
 
     // /**
     //  * render slider  
