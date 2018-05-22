@@ -17,12 +17,10 @@ class Renderer
 public:
     TextureMap texMap;
 
-    Color mBGColor;
-
-    Camera2D mCamera;
-    bool zoomCamera;
-    float zoomAmount;
-
+    Color bgColor = { 25, 25, 25, 255 };
+    Camera2D camera;
+    bool zoomCamera = true;
+    float zoomAmount = 0.5;
     float platformRenderScale;
 
     // constructor
@@ -30,21 +28,10 @@ public:
     {
         printlog(0, "creating Renderer\n");
         
-        this->mBGColor = (Color){
-            25, 25, 25, 255
-        };
-
-        this->mCamera.target = rlVec2(0, 0);
-        this->mCamera.offset = rlVec2(
-            0, 0
-            // -s->screenWidth / 2.0,
-            // -s->screenHeight / 2.0
-        );
-        this->mCamera.rotation = 0;
-        // this->mCamera.zoom = 1;    
-
-        this->zoomCamera = true;
-        this->zoomAmount = 0.5;
+        this->camera.target = rlVec2(0, 0);
+        this->camera.offset = rlVec2( 0, 0 );
+        this->camera.rotation = 0;
+        // this->camera.zoom = 1;    
 
     #if defined(PLATFORM_WEB)
         this->platformRenderScale = 2.0;

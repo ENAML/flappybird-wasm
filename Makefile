@@ -247,11 +247,9 @@ deploy-web: clean
 	make web
 	mv $(BIN_DIR)/* $(WEB_PUBLIC_DIR) 
 
-
-
-.PHONY: help
-help:
-	@echo available targets: all dist clean distclean install uninstall check run
+# .PHONY: help
+# help:
+# 	@echo available targets: all dist clean distclean install uninstall check run
 
 $(BIN): $(OBJS)
 	$(LINK.o) $^

@@ -36,7 +36,7 @@ bool circleRectCollision(Vec2f circlePos, float circleRadius, Vec2f rectPos, Vec
 
 
 /**
- * wrapper object for game
+ * wrapper object for app
  */
 class App
 {
@@ -56,7 +56,7 @@ class App
 /**
  * Global app variable
  */
-App game;
+App app;
 
 
 void game_update()
@@ -65,50 +65,44 @@ void game_update()
      * update time 
      * ------------
      */
-    game.state.tick += 1;
-    game.state.frameTime = GetFrameTime();
-    // printlog(1, "%f", game.state.frameTime);
-    if (game.state.frameTime != 0)
-        game.state.fps = 1.0f / game.state.frameTime;
-    // printlog(0, "fps: %d | frameTime %f", game.state.fps, game.state.frameTime);
+    app.state.tick += 1;
+    app.state.frameTime = GetFrameTime();
+    // printlog(1, "%f", app.state.frameTime);
+    if (app.state.frameTime != 0)
+        app.state.fps = 1.0f / app.state.frameTime;
+    // printlog(0, "fps: %d | frameTime %f", app.state.fps, app.state.frameTime);
     
     /**
      * handle input 
      * -------------
      */
     {
-        game.state.mousePressed = (
+        app.state.mousePressed = (
             IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || // click down
             IsKeyPressed(KEY_SPACE) || // space bar down
             IsGestureDetected(GESTURE_TAP) || IsGestureDetected(GESTURE_DOUBLETAP) // touch down
         );
-        game.state.mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
+        app.state.mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
 
-        game.state.mousePos = GetMousePosition();
+        app.state.mousePos = GetMousePosition();
         
-        if (game.state.mousePressed)
+        if (app.state.mousePressed)
         {
-            game.state.mousePressedPos = GetMousePosition();
-            // printlog(0, "[%i] mouse pressed", game.state.tick);
+            app.state.mousePressedPos = GetMousePosition();
+            // printlog(0, "[%i] mouse pressed", app.state.tick);
         }
 
-        if (game.state.mouseDown)
+        if (app.state.mouseDown)
         {
-            game.state.mouseDragPos = GetMousePosition();
+            app.state.mouseDragPos = GetMousePosition();
         }
 
         // toggle debug menu(s)
         if (IsKeyPressed(KEY_G))
         {
-            game.state.guiVisible = game.state.guiVisible ? false : true;
+            app.state.guiVisible = app.state.guiVisible ? false : true;
         }
     }
-
-    // auto tp = GetTouchPosition(0);
-    // println("touch pos {x: %f, y: %f}", tp.x, tp.y);
-    // auto tapped = IsGestureDetected(GESTURE_TAP) || IsGestureDetected(GESTURE_DOUBLETAP); 
-    // if (tapped)
-    //     println("tapped! [%d]", (int)rng::range(0, 100));
 
 
     /**
@@ -116,13 +110,13 @@ void game_update()
      * ------
      */
     if (
-        game.state.canUpdate &&
+        app.state.canUpdate &&
         (
-            game.state.ticksPerUpdate == 1 ||
-            game.state.tick % game.state.ticksPerUpdate == 0
+            app.state.ticksPerUpdate == 1 ||
+            app.state.tick % app.state.ticksPerUpdate == 0
         )
     ) {
-        auto& state = game.state;
+        auto& state = app.state;
         auto& gameState = state.gameState;
 
         auto update_bird = [&]()
@@ -140,7 +134,7 @@ void game_update()
             );
         };
 
-        switch (game.state.gameState.running)        
+        switch (app.state.gameState.running)        
         {
             case RunningT::Running:
                 {
@@ -275,21 +269,21 @@ void game_update()
      * Draw
      * ------
      */
-    game.renderer.render(
-        &game.state
+    app.renderer.render(
+        &app.state
     );
 
-    // if (game.state.tick % 200 == 1)
+    // if (app.state.tick % 200 == 1)
     // {
-    //     println("[DEBUG : %5i] ", game.state.tick);
+    //     println("[DEBUG : %5i] ", app.state.tick);
     // }
 
 
     /**
-     * finish game loop iteration
+     * finish app loop iteration
      * --------------------------
      */
-    game.state.tick++;
+    app.state.tick++;
 }
 
 
@@ -321,15 +315,15 @@ int main(int argc, char **argv)
         0
     );
 	InitWindow(
-        game.state.screenWidth * game.renderer.platformRenderScale,
-        game.state.screenHeight * game.renderer.platformRenderScale,
+        app.state.screenWidth * app.renderer.platformRenderScale,
+        app.state.screenHeight * app.renderer.platformRenderScale,
         "FLAPPY"
     );
 
-    game.renderer.init();
+    app.renderer.init();
 
     /**
-     * BEGIN Main game loop
+     * BEGIN Main app loop
      * --------------------
      */    
     #if defined(PLATFORM_WEB)
