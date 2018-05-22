@@ -23,6 +23,9 @@ public:
     float zoomAmount = 0.5;
     float platformRenderScale;
 
+    bool guiVisible = false;
+    bool debugDraw = false;
+
     // constructor
     Renderer()
     {
