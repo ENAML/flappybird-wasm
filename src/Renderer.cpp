@@ -145,7 +145,7 @@ void Renderer::render(State *state)
 {
     // pre-render
     BeginDrawing();
-    ClearBackground(this->mBGColor);
+    ClearBackground(this->bgColor);
 
     // render entities
     this->renderEntities(state);
@@ -163,11 +163,11 @@ void Renderer::renderEntities(State *state)
 
 
     // set camera zoom (this affects everything that is rendered)
-    this->mCamera.zoom = this->zoomCamera ? this->zoomAmount : 1.0;
-    Begin2dMode(this->mCamera);
+    this->camera.zoom = this->zoomCamera ? this->zoomAmount : 1.0;
+    Begin2dMode(this->camera);
 
 
-    float zoomScale = (1.0 / this->mCamera.zoom) * this->platformRenderScale;
+    float zoomScale = (1.0 / this->camera.zoom) * this->platformRenderScale;
     // float scale = 1.0;
 
 
