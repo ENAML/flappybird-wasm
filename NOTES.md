@@ -1,6 +1,6 @@
 Putting notes and useful links here...
 
-## NOTES
+### NOTES
 - Reducing emscripten output size:
     - 
 
@@ -17,12 +17,12 @@ Emscripten Stuff
 
 C++ Refs
 --------
-## Lambda functions
+### Lambda functions
 - http://www.cplusplus.com/reference/algorithm/remove_if/
 - https://studiofreya.com/cpp/std-remove_if-with-lambda/
 - https://shaharmike.com/cpp/lambdas-and-functions/ 
 
-## Rust-Style Pattern Matching / Discrimited Unions / Variants
+### Rust-Style Pattern Matching / Discrimited Unions / Variants
 - (SEEMS LIKE BEST OPTION): https://github.com/solodon4/Mach7
 - https://genbattle.bitbucket.io/blog/2016/10/07/Type-Safe-Unions-in-C-and-Rust/
 - seems like a good option for using them in c++: https://github.com/mapbox/variant

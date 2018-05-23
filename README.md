@@ -1,21 +1,21 @@
 TODO 
 -----
 
-## Main
+### Main
 - [ ] Upgrade Raylib version to 2.*
 - [ ] Add better logging
     - see: https://github.com/gabime/spdlog 
 - [x] Add score rendering
 - [x] Clean up codebase
 
-## Web Compile
+### Web Compile
 - [ ] Clean up Makefile emscripten compilation
 - [ ] Make new index.html
 - [ ] Figure out how to set canvas size from C++ / makefile config 
 - [x] Add closure compiler for emscripten
 - [x] Add WASM support
 
-## Nice-to-have
+### Nice-to-have
 - [ ] Add title screen
 - [ ] Add game-over screen
 - [ ] Add particle fx
@@ -41,7 +41,7 @@ Build Instructions
 Building for Web (TODO: deprecated)
 -------------------------------------
 
-## Instructions
+### Instructions
 - 1) Download and install emscripten (http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html)
 - 2) run `source ./emsdk_env.sh` from `emsdk/` directory to set environment variables
     - ex: `source ~/Projects/tests/emsdk/emsdk_env.sh`
