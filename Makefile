@@ -1,9 +1,3 @@
-# See: https://gist.github.com/maxtruxa/4b3929e118914ccef057f8a05c614b0f
-# Also somewhat related:
-### - http://nuclear.mutantstargoat.com/articles/make/
-### - https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
-### - http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/
-### - https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
 
 
 # define paths
@@ -133,22 +127,16 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 
 	LDLIBS = $(RAYLIB_RELEASE)/libraylib.bc
 
-	# Emscripten Flags; for more info, see:
-	# - https://kripken.github.io/emscripten-site/docs/tools_reference/emcc.html
-	# - https://hacks.mozilla.org/2018/01/shrinking-webassembly-and-javascript-code-sizes-in-emscripten/
-	# - http://floooh.github.io/2016/08/27/asmjs-diet.html
-	# - https://github.com/kripken/emscripten/blob/master/src/settings.js
-	# - http://tristanpenman.com/blog/posts/2018/01/08/porting-an-asteroids-clone-to-javascript/
-	
+	# Emscripten Flags (see INFOS.md)
 	#  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
     # -O2                        # if used, also set --memory-init-file 0
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
+
     EMSC_FLAGS := 
 
-	
 	EMSC_FLAGS += -D_DEFAULT_SOURCE
 	EMSC_FLAGS += -s USE_GLFW=3 
 	EMSC_FLAGS += --preload-file resources/production
@@ -174,7 +162,6 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	EMSC_FLAGS += -s ELIMINATE_DUPLICATE_FUNCTIONS=1 # slow to run!
 	EMSC_FLAGS +=  --closure 1 # run closure compiler (NOTE: '-g0' required for this)
 
-
 	CPPFLAGS += $(EMSC_FLAGS)
 	LDFLAGS += $(EMSC_FLAGS)
 
@@ -196,6 +183,7 @@ LINK.o = $(LD) $(LDFLAGS) $(LDLIBS) -o $(BIN_DIR)/$@$(EXT)
 PRECOMPILE =
 # postcompile step
 POSTCOMPILE = mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
+
 
 all: $(BIN)
 
@@ -229,15 +217,14 @@ run: all
 	@echo [ RUNNING \'$(BIN_DIR)/$(BIN)\' ]
 	./$(BIN_DIR)/$(BIN)
 
-
 # WEB
 .PHONY: web
 web:
 	make PLATFORM=PLATFORM_WEB
 
-# WEB
+# RUN WEB (start HTTP server)
 .PHONY: run-web
-run-web:
+run-web: web
 	http-server build
 
 # WEB
@@ -247,9 +234,7 @@ deploy-web: clean
 	make web
 	mv $(BIN_DIR)/* $(WEB_PUBLIC_DIR) 
 
-# .PHONY: help
-# help:
-# 	@echo available targets: all dist clean distclean install uninstall check run
+
 
 $(BIN): $(OBJS)
 	$(LINK.o) $^
